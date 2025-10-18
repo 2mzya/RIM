@@ -1,4 +1,4 @@
-// بيانات متحف الإنترنت العشوائي
+// بيانات متحف الإنترنت العشوائي - 100 عنصر
 const museumData = [
     { 
         type: "image", 
@@ -115,5 +115,540 @@ const museumData = [
         src: "https://cdn.pixabay.com/photo/2015/01/08/18/25/desk-593327_1280.jpg", 
         caption: "A typical internet user's desk in the early 2000s",
         year: "2003"
+    },
+    { 
+        type: "quote", 
+        text: "Information wants to be free.", 
+        author: "Stewart Brand",
+        year: "1984"
+    },
+    { 
+        type: "code", 
+        text: "// Perl CGI script from the 90s\n#!/usr/bin/perl\nprint \"Content-type: text/html\\n\\n\";\nprint \"<h1>Hello World!</h1>\";", 
+        year: "1996"
+    },
+    { 
+        type: "ascii", 
+        text: "  ______\n /      \\\n|  .  .  |\n|   __   |\n \\______/\n  MODEM",
+        caption: "Dial-up modem ASCII art",
+        year: "1992"
+    },
+    { 
+        type: "image", 
+        src: "https://cdn.pixabay.com/photo/2017/05/29/15/34/computer-2353960_1280.jpg", 
+        caption: "Vintage computer with CRT monitor",
+        year: "1988"
+    },
+    { 
+        type: "quote", 
+        text: "The internet is a telephone system that's gotten uppity.", 
+        author: "Clifford Stoll",
+        year: "1995"
+    },
+    { 
+        type: "code", 
+        text: "<!-- Guestbook entry -->\n<strong>Name:</strong> WebSurfer99\n<strong>Email:</strong> coolguy@aol.com\n<strong>Comment:</strong> Awesome site! Visit mine too!", 
+        year: "1998"
+    },
+    { 
+        type: "ascii", 
+        text: "   @@@@\n  @    @\n @  @@  @\n@   @@   @\n@        @\n @      @\n  @@@@@@\n   FLOPPY",
+        caption: "3.5 inch floppy disk ASCII art",
+        year: "1991"
+    },
+    { 
+        type: "image", 
+        src: "https://cdn.pixabay.com/photo/2016/03/27/07/32/clouds-1282314_1280.jpg", 
+        caption: "Early concept of cloud computing",
+        year: "2007"
+    },
+    { 
+        type: "quote", 
+        text: "On the internet, nobody knows you're a dog.", 
+        author: "Peter Steiner",
+        year: "1993"
+    },
+    { 
+        type: "code", 
+        text: "// Early CSS\n<font face=\"Arial\" size=\"2\" color=\"blue\">\nThis is how we styled text before CSS\n</font>", 
+        year: "1996"
+    },
+    { 
+        type: "ascii", 
+        text: "  .-.\n (o o)\n | O |\n |   |\n '~~~'\n  BBS",
+        caption: "Bulletin Board System ASCII art",
+        year: "1989"
+    },
+    { 
+        type: "image", 
+        src: "https://cdn.pixabay.com/photo/2016/11/29/12/54/code-1869503_1280.jpg", 
+        caption: "Early web development environment",
+        year: "1997"
+    },
+    { 
+        type: "quote", 
+        text: "The internet is just a world passing around notes in a classroom.", 
+        author: "Jon Stewart",
+        year: "2004"
+    },
+    { 
+        type: "code", 
+        text: "<!-- Webring navigation -->\n<a href=\"http://webring.com/prev\">← Previous Site</a>\n<a href=\"http://webring.com/next\">Next Site →</a>", 
+        year: "1999"
+    },
+    { 
+        type: "ascii", 
+        text: "   /\\\n  /  \\\n /____\\\n|      |\n|  OK  |\n|______|\n BUTTON",
+        caption: "Classic web button ASCII",
+        year: "1995"
+    },
+    { 
+        type: "image", 
+        src: "https://cdn.pixabay.com/photo/2017/06/28/10/56/network-2450280_1280.jpg", 
+        caption: "Network infrastructure diagram",
+        year: "2001"
+    },
+    { 
+        type: "quote", 
+        text: "The internet is the most important single development in the history of human communication since the invention of call waiting.", 
+        author: "Dave Barry",
+        year: "2000"
+    },
+    { 
+        type: "code", 
+        text: "// Early PHP\n<?php\necho \"<center><h1>Welcome to my PHP site!</h1></center>\";\n?>", 
+        year: "2000"
+    },
+    { 
+        type: "ascii", 
+        text: "  .-^-.\n /     \\\n|       |\n| 404   |\n| ERROR |\n \\_____/",
+        caption: "404 Error ASCII art",
+        year: "1996"
+    },
+    { 
+        type: "image", 
+        src: "https://cdn.pixabay.com/photo/2015/07/17/20/02/computer-849384_1280.jpg", 
+        caption: "Early laptop computer with internet access",
+        year: "1994"
+    },
+    { 
+        type: "quote", 
+        text: "The internet is a great way to get on the net.", 
+        author: "Bob Dole",
+        year: "1996"
+    },
+    { 
+        type: "code", 
+        text: "<!-- Animated GIF counter -->\n<img src=\"counter.gif\" width=\"88\" height=\"31\" border=\"0\">\n<br>\n<small>Visitors since 1998</small>", 
+        year: "1998"
+    },
+    { 
+        type: "ascii", 
+        text: "   ___   \n  /   \\  \n |     | \n | www | \n |     | \n  \\___/  \n  WORLD",
+        caption: "World Wide Web ASCII art",
+        year: "1993"
+    },
+    { 
+        type: "image", 
+        src: "https://cdn.pixabay.com/photo/2016/11/19/15/32/code-1839877_1280.jpg", 
+        caption: "Early HTML code editor",
+        year: "1995"
+    },
+    { 
+        type: "quote", 
+        text: "The internet is like a giant jellyfish. You can't step on it. You can't go around it. You've got to get through it.", 
+        author: "John Evans",
+        year: "1997"
+    },
+    { 
+        type: "code", 
+        text: "// Early Java Applet\n<applet code=\"MyApplet.class\" width=\"300\" height=\"200\">\nYour browser doesn't support Java!\n</applet>", 
+        year: "1997"
+    },
+    { 
+        type: "ascii", 
+        text: "  .-----.\n /       \\\n|  .---.  |\n|  |   |  |\n|  '---'  |\n \\_______/\n  BROWSER",
+        caption: "Web browser ASCII art",
+        year: "1994"
+    },
+    { 
+        type: "image", 
+        src: "https://cdn.pixabay.com/photo/2017/08/05/11/16/logo-2582748_1280.png", 
+        caption: "Early HTML5 logo and standards",
+        year: "2008"
+    },
+    { 
+        type: "quote", 
+        text: "The internet is becoming the town square for the global village of tomorrow.", 
+        author: "Bill Gates",
+        year: "1999"
+    },
+    { 
+        type: "code", 
+        text: "<!-- Frameset example -->\n<frameset cols=\"20%,80%\">\n  <frame src=\"menu.html\">\n  <frame src=\"content.html\">\n</frameset>", 
+        year: "1998"
+    },
+    { 
+        type: "ascii", 
+        text: "   ___   \n  / _ \\  \n | | | | \n | |_| | \n  \\___/  \n  EMAIL",
+        caption: "Email symbol ASCII art",
+        year: "1992"
+    },
+    { 
+        type: "image", 
+        src: "https://cdn.pixabay.com/photo/2016/11/30/12/16/question-1872665_1280.jpg", 
+        caption: "Early search engine interface",
+        year: "1999"
+    },
+    { 
+        type: "quote", 
+        text: "The internet is the largest library in the world, but all the books are on the floor.", 
+        author: "John Allen Paulos",
+        year: "2002"
+    },
+    { 
+        type: "code", 
+        text: "// Early Flash ActionScript\nonClipEvent (load) {\n  this._x = 100;\n  this._y = 200;\n}", 
+        year: "2000"
+    },
+    { 
+        type: "ascii", 
+        text: "  ______\n /  __  \\\n|  |  |  |\n|  |__|  |\n|       |\n \\______/\n  SERVER",
+        caption: "Server rack ASCII art",
+        year: "1995"
+    },
+    { 
+        type: "image", 
+        src: "https://cdn.pixabay.com/photo/2017/01/18/08/25/social-media-1989152_1280.jpg", 
+        caption: "Early social media concept",
+        year: "2004"
+    },
+    { 
+        type: "quote", 
+        text: "The internet is the first thing that humanity has built that humanity doesn't understand.", 
+        author: "Eric Schmidt",
+        year: "2007"
+    },
+    { 
+        type: "code", 
+        text: "<!-- MIDI background music -->\n<embed src=\"background.mid\" autostart=\"true\" loop=\"true\" hidden=\"true\">", 
+        year: "1999"
+    },
+    { 
+        type: "ascii", 
+        text: "   /\\\n  /  \\\n /    \\\n|  ||  |\n|  ||  |\n \\____/\n  WIFI",
+        caption: "WiFi symbol ASCII art",
+        year: "2003"
+    },
+    { 
+        type: "image", 
+        src: "https://cdn.pixabay.com/photo/2016/11/19/14/00/code-1839406_1280.jpg", 
+        caption: "Early programming documentation",
+        year: "1996"
+    },
+    { 
+        type: "quote", 
+        text: "The internet is a virtual space that is as real as physical space.", 
+        author: "John Perry Barlow",
+        year: "1996"
+    },
+    { 
+        type: "code", 
+        text: "// Early XMLHttpRequest\nif (window.ActiveXObject) {\n  xmlHttp = new ActiveXObject(\"Microsoft.XMLHTTP\");\n}", 
+        year: "2001"
+    },
+    { 
+        type: "ascii", 
+        text: "  .-.-.-.\n ( C O D E )\n  '-'-'-'\n DEVELOPER",
+        caption: "Programmer ASCII art",
+        year: "1997"
+    },
+    { 
+        type: "image", 
+        src: "https://cdn.pixabay.com/photo/2017/01/31/15/33/chat-2025546_1280.png", 
+        caption: "Early instant messaging interface",
+        year: "1999"
+    },
+    { 
+        type: "quote", 
+        text: "The internet is not just one thing, it's a collection of things - of numerous communications networks that all speak the same digital language.", 
+        author: "James H. Clark",
+        year: "1996"
+    },
+    { 
+        type: "code", 
+        text: "<!-- Under construction GIF -->\n<img src=\"under_construction.gif\" width=\"400\" height=\"100\" alt=\"Under Construction\">", 
+        year: "1997"
+    },
+    { 
+        type: "ascii", 
+        text: "   ___   \n  /   \\  \n |  .  | \n | / \\ | \n | \\_/ | \n  \\___/  \n  GLOBE",
+        caption: "Internet globe ASCII art",
+        year: "1994"
+    },
+    { 
+        type: "image", 
+        src: "https://cdn.pixabay.com/photo/2017/06/10/07/18/processor-2389653_1280.jpg", 
+        caption: "Microprocessor development",
+        year: "2000"
+    },
+    { 
+        type: "quote", 
+        text: "The internet is like a giant international plumbing system.", 
+        author: "John Gage",
+        year: "1994"
+    },
+    { 
+        type: "code", 
+        text: "// Early cookie usage\ndocument.cookie = \"username=JohnDoe; expires=Thu, 18 Dec 2003 12:00:00 UTC\";", 
+        year: "1997"
+    },
+    { 
+        type: "ascii", 
+        text: "  ______\n /  __  \\\n|  |  |  |\n|  |  |  |\n|  |__|  |\n \\______/\n  ROUTER",
+        caption: "Network router ASCII art",
+        year: "1996"
+    },
+    { 
+        type: "image", 
+        src: "https://cdn.pixabay.com/photo/2016/11/19/14/30/computer-1839559_1280.jpg", 
+        caption: "Early e-commerce website",
+        year: "1999"
+    },
+    { 
+        type: "quote", 
+        text: "The internet is the most democratic media environment we've ever had.", 
+        author: "Arianna Huffington",
+        year: "2005"
+    },
+    { 
+        type: "code", 
+        text: "<!-- Early meta tags -->\n<meta name=\"keywords\" content=\"cool, website, awesome, internet\">\n<meta name=\"description\" content=\"The best website ever!\">", 
+        year: "1998"
+    },
+    { 
+        type: "ascii", 
+        text: "   ___   \n  / _ \\  \n | (_) | \n  > _ <  \n | (_) | \n  \\___/  \n  CHAT",
+        caption: "Chat room ASCII art",
+        year: "1995"
+    },
+    { 
+        type: "image", 
+        src: "https://cdn.pixabay.com/photo/2017/05/29/18/27/robot-2354691_1280.jpg", 
+        caption: "Early web crawler concept",
+        year: "2001"
+    },
+    { 
+        type: "quote", 
+        text: "The internet is the fabric of our lives.", 
+        author: "Nicholas Negroponte",
+        year: "1995"
+    },
+    { 
+        type: "code", 
+        text: "// Early DOM manipulation\nif (document.all) {\n  // Internet Explorer\n  document.all.myDiv.innerHTML = \"Hello IE!\";\n}", 
+        year: "1999"
+    },
+    { 
+        type: "ascii", 
+        text: "  .-----.\n /       \\\n|  .---.  |\n|  |   |  |\n|  '---'  |\n \\_______/\n  DATABASE",
+        caption: "Database server ASCII art",
+        year: "1998"
+    },
+    { 
+        type: "image", 
+        src: "https://cdn.pixabay.com/photo/2017/01/25/17/48/background-2008593_1280.jpg", 
+        caption: "Early website background patterns",
+        year: "1997"
+    },
+    { 
+        type: "quote", 
+        text: "The internet is the world's largest copy machine.", 
+        author: "Kevin Kelly",
+        year: "2008"
+    },
+    { 
+        type: "code", 
+        text: "<!-- Early website hit counter -->\n<script src=\"http://www.counter.com/counter.php?page=mywebsite\"></script>", 
+        year: "2000"
+    },
+    { 
+        type: "ascii", 
+        text: "   ___   \n  /   \\  \n |  O  | \n |     | \n |  O  | \n  \\___/  \n  BINARY",
+        caption: "Binary code ASCII art",
+        year: "1993"
+    },
+    { 
+        type: "image", 
+        src: "https://cdn.pixabay.com/photo/2017/06/21/16/14/blockchain-2428149_1280.jpg", 
+        caption: "Early blockchain concept art",
+        year: "2009"
+    },
+    { 
+        type: "quote", 
+        text: "The internet is the new town square.", 
+        author: "Meg Whitman",
+        year: "2000"
+    },
+    { 
+        type: "code", 
+        text: "// Early web security\nif (navigator.userAgent.indexOf(\"MSIE\") != -1) {\n  alert(\"Please use a better browser!\");\n}", 
+        year: "2002"
+    },
+    { 
+        type: "ascii", 
+        text: "  ______\n /  __  \\\n|  |  |  |\n|  |  |  |\n|  |__|  |\n \\______/\n  FIREWALL",
+        caption: "Firewall protection ASCII art",
+        year: "1997"
+    },
+    { 
+        type: "image", 
+        src: "https://cdn.pixabay.com/photo/2016/11/19/15/32/laptop-1839876_1280.jpg", 
+        caption: "Early responsive design concept",
+        year: "2006"
+    },
+    { 
+        type: "quote", 
+        text: "The internet is the great equalizer.", 
+        author: "Bill Gates",
+        year: "2000"
+    },
+    { 
+        type: "code", 
+        text: "<!-- Early RSS feed -->\n<link rel=\"alternate\" type=\"application/rss+xml\" title=\"RSS\" href=\"rss.xml\">", 
+        year: "2002"
+    },
+    { 
+        type: "ascii", 
+        text: "   ___   \n  /   \\  \n |  -  | \n |     | \n |  -  | \n  \\___/  \n  SIGNAL",
+        caption: "Internet signal ASCII art",
+        year: "1999"
+    },
+    { 
+        type: "image", 
+        src: "https://cdn.pixabay.com/photo/2017/08/05/11/16/logo-2582747_1280.png", 
+        caption: "CSS3 early adoption",
+        year: "2005"
+    },
+    { 
+        type: "quote", 
+        text: "The internet is a telephone system that's gotten uppity.", 
+        author: "Clifford Stoll",
+        year: "1995"
+    },
+    { 
+        type: "code", 
+        text: "// Early mobile detection\nif (screen.width < 480) {\n  document.write(\"Mobile site\");\n}", 
+        year: "2007"
+    },
+    { 
+        type: "ascii", 
+        text: "  .-.-.-.\n ( B L O G )\n  '-'-'-'\n BLOGGER",
+        caption: "Blogger ASCII art",
+        year: "1999"
+    },
+    { 
+        type: "image", 
+        src: "https://cdn.pixabay.com/photo/2017/01/13/15/27/background-1978240_1280.jpg", 
+        caption: "Early web design templates",
+        year: "2001"
+    },
+    { 
+        type: "quote", 
+        text: "The internet is the most powerful tool we have for creating a more open and connected world.", 
+        author: "Mark Zuckerberg",
+        year: "2009"
+    },
+    { 
+        type: "code", 
+        text: "<!-- Early favicon -->\n<link rel=\"shortcut icon\" href=\"favicon.ico\" type=\"image/x-icon\">", 
+        year: "1999"
+    },
+    { 
+        type: "ascii", 
+        text: "   ___   \n  /   \\  \n |  @  | \n |     | \n |  @  | \n  \\___/  \n  SOCIAL",
+        caption: "Social media ASCII art",
+        year: "2004"
+    },
+    { 
+        type: "image", 
+        src: "https://cdn.pixabay.com/photo/2017/01/13/01/22/security-1975427_1280.jpg", 
+        caption: "Early internet security concepts",
+        year: "2003"
+    },
+    { 
+        type: "quote", 
+        text: "The internet is just a world passing around notes in a classroom.", 
+        author: "Jon Stewart",
+        year: "2004"
+    },
+    { 
+        type: "code", 
+        text: "// Early JSON usage\nvar data = eval('(' + responseText + ')');", 
+        year: "2003"
+    },
+    { 
+        type: "ascii", 
+        text: "  ______\n /  __  \\\n|  |  |  |\n|  |  |  |\n|  |__|  |\n \\______/\n  CLOUD",
+        caption: "Cloud computing ASCII art",
+        year: "2008"
+    },
+    { 
+        type: "image", 
+        src: "https://cdn.pixabay.com/photo/2017/01/18/08/25/social-media-1989151_1280.jpg", 
+        caption: "Early viral content concept",
+        year: "2006"
+    },
+    { 
+        type: "quote", 
+        text: "The internet is the new printing press.", 
+        author: "Esther Dyson",
+        year: "1998"
+    },
+    { 
+        type: "code", 
+        text: "<!-- Early semantic web -->\n<div class=\"header\">\n  <div class=\"nav\">\n    <ul class=\"menu\">...</ul>\n  </div>\n</div>", 
+        year: "2004"
+    },
+    { 
+        type: "ascii", 
+        text: "   ___   \n  /   \\  \n |  #  | \n |     | \n |  #  | \n  \\___/  \n  HASHTAG",
+        caption: "Hashtag ASCII art",
+        year: "2007"
+    },
+    { 
+        type: "image", 
+        src: "https://cdn.pixabay.com/photo/2017/01/31/15/33/chat-2025545_1280.png", 
+        caption: "Early video conferencing software",
+        year: "2005"
+    },
+    { 
+        type: "quote", 
+        text: "The internet is the first medium that allows people to both consume and produce content.", 
+        author: "Tim O'Reilly",
+        year: "2005"
+    },
+    { 
+        type: "code", 
+        text: "// Early web standards\n<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\">", 
+        year: "2002"
+    },
+    { 
+        type: "ascii", 
+        text: "  .-.-.-.\n ( A P P S )\n  '-'-'-'\n  WEB APPS",
+        caption: "Web applications ASCII art",
+        year: "2006"
+    },
+    { 
+        type: "image", 
+        src: "https://cdn.pixabay.com/photo/2017/01/31/15/34/chat-2025548_1280.png", 
+        caption: "Early mobile app development",
+        year: "2008"
+    },
+    { 
+        type: "quote", 
+        text: "The internet is the most important human invention since fire.", 
+        author: "Vint Cerf",
+        year: "2007"
     }
 ];
