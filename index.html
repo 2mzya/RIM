@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Internet Museum</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="museum"></div>
+    <button id="nextBtn">Next</button>
+    <footer>BY Mohamad Zahir & Mohammed Osama</footer>
+
+    <script>
+        const museumDiv = document.getElementById('museum');
+        const nextBtn = document.getElementById('nextBtn');
+
+        let data = [];
+
+        async function loadData() {
+            const response = await fetch('data.json');
+            data = await response.json();
+            showRandomItem();
+        }
+
+        function showRandomItem() {
+            if(data.length === 0) return;
+            const item = data[Math.floor(Math.random() * data.length)];
+            museumDiv.innerHTML = '';
+
+            if(item.type === 'image') {
+                const img = document.createElement('img');
+                img.src = item.src;
+                museumDiv.appendChild(img);
+                const caption = document.createElement('p');
+                caption.textContent = item.caption;
+                museumDiv.appendChild(caption);
+            } else if(item.type === 'quote') {
+                const p = document.createElement('p');
+                p.textContent = item.text;
+                museumDiv.appendChild(p);
+            } else if(item.type === 'code') {
+                const pre = document.createElement('pre');
+                pre.textContent = item.text;
+                museumDiv.appendChild(pre);
+            }
+        }
+
+        nextBtn.addEventListener('click', showRandomItem);
+
+        loadData();
+    </script>
+</body>
+</html>
