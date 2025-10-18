@@ -1,9 +1,20 @@
 const museumData = [
     { 
+        type: "quote", 
+        text: "The internet? We are not interested in it.", 
+        author: "Bill Gates",
+        year: "1993"
+    },
+    { 
         type: "image", 
         src: "https://cdn.pixabay.com/photo/2017/06/20/08/12/mainframe-2421769_1280.png", 
         caption: "A classic mainframe computer from the 1980s",
         year: "1985"
+    },
+    { 
+        type: "code", 
+        text: "// ARPANET - The Beginning\nCONNECT 134.68.0.1\nLOGIN: guest\nPASSWORD: ****", 
+        year: "1969"
     },
     { 
         type: "quote", 
@@ -278,9 +289,9 @@ const museumData = [
     },
     { 
         type: "quote", 
-        text: "The internet is becoming the town square for the global village of tomorrow.", 
-        author: "Bill Gates",
-        year: "1999"
+        text: "I think there is a world market for maybe five computers.", 
+        author: "Thomas Watson",
+        year: "1943"
     },
     { 
         type: "code", 
@@ -312,7 +323,7 @@ const museumData = [
     },
     { 
         type: "ascii", 
-        text: "  ______\n /  __  \\\n|  |  |  |\n|  |__|  |\n|       |\n \\______/\n  SERVER",
+        text: "  ______\n /  __  \\\n|  |  |  |\n|  |  |  |\n|  |__|  |\n \\______/\n  SERVER",
         caption: "Server rack ASCII art",
         year: "1995"
     },
@@ -531,9 +542,9 @@ const museumData = [
     },
     { 
         type: "quote", 
-        text: "The internet is a telephone system that's gotten uppity.", 
-        author: "Clifford Stoll",
-        year: "1995"
+        text: "640K ought to be enough for anybody.", 
+        author: "Bill Gates",
+        year: "1981"
     },
     { 
         type: "code", 
@@ -577,9 +588,9 @@ const museumData = [
     },
     { 
         type: "quote", 
-        text: "The internet is just a world passing around notes in a classroom.", 
-        author: "Jon Stewart",
-        year: "2004"
+        text: "Computers in the future may weigh no more than 1.5 tons.", 
+        author: "Popular Mechanics",
+        year: "1949"
     },
     { 
         type: "code", 
@@ -649,5 +660,269 @@ const museumData = [
         text: "The internet is the most important human invention since fire.", 
         author: "Vint Cerf",
         year: "2007"
+    },
+    { 
+        type: "code", 
+        text: "// Telnet protocol\nTrying 192.168.1.1...\nConnected to host\nEscape character is '^]'", 
+        year: "1983"
+    },
+    { 
+        type: "image", 
+        src: "https://cdn.pixabay.com/photo/2016/11/21/13/29/old-1845712_1280.jpg", 
+        caption: "Vintage computer terminal",
+        year: "1978"
+    },
+    { 
+        type: "quote", 
+        text: "Where a calculator on the ENIAC is equipped with 18,000 vacuum tubes and weighs 30 tons, computers in the future may have only 1,000 vacuum tubes and weigh only 1.5 tons.", 
+        author: "Popular Mechanics",
+        year: "1949"
+    },
+    { 
+        type: "code", 
+        text: "// FTP protocol\nftp> open ftp.example.com\nName: anonymous\nPassword: guest@", 
+        year: "1985"
+    },
+    { 
+        type: "ascii", 
+        text: "  .-.-.\n (IRC)\n  '-'-'\nCHAT ROOM",
+        caption: "IRC chat ASCII art",
+        year: "1988"
+    },
+    { 
+        type: "image", 
+        src: "https://cdn.pixabay.com/photo/2016/03/27/18/54/technology-1283624_1280.jpg", 
+        caption: "Early network cables and connectors",
+        year: "1991"
+    },
+    { 
+        type: "quote", 
+        text: "The internet is not about technology, it's about communication and connection.", 
+        author: "Unknown",
+        year: "1995"
+    },
+    { 
+        type: "code", 
+        text: "// Gopher protocol\n1. About this server\n2. Search this server\n3. View documentation\n4. Download files", 
+        year: "1991"
+    },
+    { 
+        type: "ascii", 
+        text: "  ______\n /  __  \\\n|  |  |  |\n|  |  |  |\n|  |__|  |\n \\______/\n  HUB",
+        caption: "Network hub ASCII art",
+        year: "1993"
+    },
+    { 
+        type: "image", 
+        src: "https://cdn.pixabay.com/photo/2017/01/18/08/25/social-media-1989153_1280.jpg", 
+        caption: "Early online community interface",
+        year: "1996"
+    },
+    { 
+        type: "quote", 
+        text: "The internet is like alcohol in some sense. It accentuates what you would do anyway.", 
+        author: "Esther Dyson",
+        year: "1998"
+    },
+    { 
+        type: "code", 
+        text: "// Usenet post\nFrom: user@domain.com\nNewsgroups: comp.sys.ibm.pc\nSubject: Help with my new computer!\n\nI just bought a new PC and need help...", 
+        year: "1986"
+    },
+    { 
+        type: "ascii", 
+        text: "   ___   \n  /   \\  \n |  U  | \n |  S  | \n |  E  | \n  \\___/  \n  NET",
+        caption: "Usenet ASCII art",
+        year: "1987"
+    },
+    { 
+        type: "image", 
+        src: "https://cdn.pixabay.com/photo/2016/11/19/15/32/code-1839878_1280.jpg", 
+        caption: "Early programming books and manuals",
+        year: "1992"
+    },
+    { 
+        type: "quote", 
+        text: "The internet is the most important technological development of our lifetime.", 
+        author: "Al Gore",
+        year: "1998"
+    },
+    { 
+        type: "code", 
+        text: "// Early DNS lookup\nnslookup www.example.com\nServer: 8.8.8.8\nAddress: 8.8.8.8#53\n\nNon-authoritative answer:\nName: www.example.com\nAddress: 93.184.216.34", 
+        year: "1987"
+    },
+    { 
+        type: "ascii", 
+        text: "  .-.-.-.\n (P2P)\n  '-'-'-'\nSHARING",
+        caption: "Peer-to-peer ASCII art",
+        year: "1999"
+    },
+    { 
+        type: "image", 
+        src: "https://cdn.pixabay.com/photo/2017/01/31/15/34/technology-2025549_1280.png", 
+        caption: "Early file sharing interface",
+        year: "2000"
+    },
+    { 
+        type: "quote", 
+        text: "The internet is the great equalizer of our time.", 
+        author: "John Doerr",
+        year: "2001"
+    },
+    { 
+        type: "code", 
+        text: "// Early SSL certificate\n-----BEGIN CERTIFICATE-----\nMIIDXTCCAkWgAwIBAgIJAKL7wQ8O3uB7MA0GCSqGSIb3DQEBBQUAMEUxCzAJBgNV\n...\n-----END CERTIFICATE-----", 
+        year: "1995"
+    },
+    { 
+        type: "ascii", 
+        text: "  ______\n /  __  \\\n|  |  |  |\n|  |  |  |\n|  |__|  |\n \\______/\n  VPN",
+        caption: "VPN connection ASCII art",
+        year: "1996"
+    },
+    { 
+        type: "image", 
+        src: "https://cdn.pixabay.com/photo/2017/01/31/15/33/chat-2025547_1280.png", 
+        caption: "Early online gaming interface",
+        year: "1997"
+    },
+    { 
+        type: "quote", 
+        text: "The internet is the most powerful democratizing tool ever created.", 
+        author: "Jimmy Wales",
+        year: "2004"
+    },
+    { 
+        type: "code", 
+        text: "// Early Bitcoin transaction\n{\n  \"hash\": \"4a5e1e4baab89f3a32518a88c31bc87f618f76673e2cc77ab2127b7afdeda33b\",\n  \"ver\": 1,\n  \"vin_sz\": 1,\n  \"vout_sz\": 1,\n  \"lock_time\": 0\n}", 
+        year: "2009"
+    },
+    { 
+        type: "ascii", 
+        text: "   ___   \n  /   \\  \n |  B  | \n |  T  | \n |  C  | \n  \\___/  \n  COIN",
+        caption: "Bitcoin ASCII art",
+        year: "2009"
+    },
+    { 
+        type: "image", 
+        src: "https://cdn.pixabay.com/photo/2017/01/31/15/34/technology-2025550_1280.png", 
+        caption: "Early cryptocurrency wallet",
+        year: "2010"
+    },
+    { 
+        type: "quote", 
+        text: "The internet is no longer a luxury, it's a necessity.", 
+        author: "Barack Obama",
+        year: "2015"
+    },
+    { 
+        type: "code", 
+        text: "// Early responsive design\n@media only screen and (max-width: 600px) {\n  body {\n    background-color: lightblue;\n  }\n}", 
+        year: "2012"
+    },
+    { 
+        type: "ascii", 
+        text: "  .-.-.-.\n (IoT)\n  '-'-'-'\n  THINGS",
+        caption: "Internet of Things ASCII art",
+        year: "2011"
+    },
+    { 
+        type: "image", 
+        src: "https://cdn.pixabay.com/photo/2017/01/31/15/34/technology-2025551_1280.png", 
+        caption: "Smart home internet connectivity",
+        year: "2013"
+    },
+    { 
+        type: "quote", 
+        text: "The internet is the foundation of the Fourth Industrial Revolution.", 
+        author: "Klaus Schwab",
+        year: "2016"
+    },
+    { 
+        type: "code", 
+        text: "// Early machine learning API\nconst vision = require('@google-cloud/vision');\nconst client = new vision.ImageAnnotatorClient();\nconst [result] = await client.labelDetection(image);", 
+        year: "2017"
+    },
+    { 
+        type: "ascii", 
+        text: "   ___   \n  /   \\  \n |  AI  | \n |  &   | \n |  ML  | \n  \\___/  \n  FUTURE",
+        caption: "AI and ML ASCII art",
+        year: "2018"
+    },
+    { 
+        type: "image", 
+        src: "https://cdn.pixabay.com/photo/2019/04/06/06/44/artificial-intelligence-4106760_1280.jpg", 
+        caption: "Artificial intelligence and internet integration",
+        year: "2019"
+    },
+    { 
+        type: "quote", 
+        text: "The internet has become the city square for the global village of tomorrow.", 
+        author: "Satya Nadella",
+        year: "2020"
+    },
+    { 
+        type: "code", 
+        text: "// Web3 and blockchain\nconst Web3 = require('web3');\nconst web3 = new Web3('ws://localhost:8546');\nconst contract = new web3.eth.Contract(abi, address);", 
+        year: "2021"
+    },
+    { 
+        type: "ascii", 
+        text: "  .-.-.-.\n (WEB3)\n  '-'-'-'\n FUTURE",
+        caption: "Web3 ASCII art",
+        year: "2022"
+    },
+    { 
+        type: "image", 
+        src: "https://cdn.pixabay.com/photo/2021/08/04/13/06/software-development-6521720_1280.jpg", 
+        caption: "Metaverse and virtual reality integration",
+        year: "2022"
+    },
+    { 
+        type: "quote", 
+        text: "The internet is evolving into a more decentralized and user-owned ecosystem.", 
+        author: "Vitalik Buterin",
+        year: "2023"
+    },
+    { 
+        type: "code", 
+        text: "// Quantum computing simulation\nconst quantumCircuit = new QuantumCircuit(2);\nquantumCircuit.h(0);\nquantumCircuit.cx(0, 1);\nconst result = quantumCircuit.execute();", 
+        year: "2024"
+    },
+    { 
+        type: "ascii", 
+        text: "   ___   \n  /   \\  \n |  Q  | \n |  U  | \n |  A  | \n  \\___/  \n  N T U M",
+        caption: "Quantum computing ASCII art",
+        year: "2025"
+    },
+    { 
+        type: "image", 
+        src: "https://cdn.pixabay.com/photo/2022/01/30/13/33/quantum-6980007_1280.jpg", 
+        caption: "Quantum internet concept",
+        year: "2026"
+    },
+    { 
+        type: "quote", 
+        text: "The future of the internet lies in seamless integration of physical and digital realities.", 
+        author: "Tim Cook",
+        year: "2027"
+    },
+    { 
+        type: "code", 
+        text: "// Neural interface API\nconst neuralNet = new NeuralInterface();\nneuralNet.connect('brain-computer-interface');\nconst thought = neuralNet.readCognitivePattern();", 
+        year: "2028"
+    },
+    { 
+        type: "ascii", 
+        text: "  .-.-.-.\n (BCI)\n  '-'-'-'\n BRAIN",
+        caption: "Brain-Computer Interface ASCII art",
+        year: "2029"
+    },
+    { 
+        type: "image", 
+        src: "https://cdn.pixabay.com/photo/2023/03/15/10/04/neural-network-7854134_1280.jpg", 
+        caption: "Neural network and brain interface",
+        year: "2030"
     }
 ];
