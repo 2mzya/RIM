@@ -1,477 +1,555 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Random Internet Museum</title>
-<style>
-:root {
-  --primary-color: #0f0;
-  --secondary-color: #ff00ff;
-  --bg-color: #000;
-  --card-bg: #111;
-  --text-color: #0f0;
-  --accent-color: #00ffff;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Internet Museum</title>
+    <style>
+        :root {
+            --primary-color: #0f0;
+            --secondary-color: #ff00ff;
+            --bg-color: #000;
+            --card-bg: #111;
+            --text-color: #0f0;
+            --accent-color: #00ffff;
+        }
 
-* {
-  box-sizing: border-box;
-}
+        * {
+            box-sizing: border-box;
+        }
 
-body {
-  background-color: var(--bg-color);
-  color: var(--text-color);
-  font-family: 'Courier New', Courier, monospace;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  margin: 0;
-  padding: 20px;
-  text-align: center;
-  background-image: 
-    radial-gradient(circle at 10% 20%, rgba(0, 255, 0, 0.05) 0%, transparent 20%),
-    radial-gradient(circle at 90% 80%, rgba(255, 0, 255, 0.05) 0%, transparent 20%);
-}
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 255, 0, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 0, 255, 0.05) 0%, transparent 20%);
+        }
 
-header {
-  width: 100%;
-  margin-bottom: 30px;
-  border-bottom: 2px solid var(--primary-color);
-  padding-bottom: 15px;
-}
+        header {
+            width: 100%;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 15px;
+        }
 
-h1 {
-  font-size: 2.5rem;
-  margin: 0;
-  text-shadow: 0 0 10px var(--primary-color);
-  animation: glow 2s ease-in-out infinite alternate;
-}
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            text-shadow: 0 0 10px var(--primary-color);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
 
-@keyframes glow {
-  from {
-    text-shadow: 0 0 5px var(--primary-color);
-  }
-  to {
-    text-shadow: 0 0 15px var(--primary-color), 0 0 20px var(--accent-color);
-  }
-}
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px var(--primary-color);
+            }
+            to {
+                text-shadow: 0 0 15px var(--primary-color), 0 0 20px var(--accent-color);
+            }
+        }
 
-.subtitle {
-  font-size: 1rem;
-  margin-top: 5px;
-  color: var(--accent-color);
-}
+        .subtitle {
+            font-size: 1rem;
+            margin-top: 5px;
+            color: var(--accent-color);
+        }
 
-#museum {
-  width: 100%;
-  max-width: 800px;
-  min-height: 400px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  background-color: rgba(17, 17, 17, 0.8);
-  border: 2px solid var(--primary-color);
-  border-radius: 10px;
-  box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
-  margin-bottom: 20px;
-  position: relative;
-  overflow: hidden;
-}
+        #museum {
+            width: 100%;
+            max-width: 800px;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background-color: rgba(17, 17, 17, 0.8);
+            border: 2px solid var(--primary-color);
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
 
-#museum::before {
-  content: "";
-  position: absolute;
-  top: -10px;
-  left: -10px;
-  right: -10px;
-  bottom: -10px;
-  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--accent-color), var(--primary-color));
-  background-size: 400% 400%;
-  z-index: -1;
-  animation: gradient 15s ease infinite;
-  opacity: 0.1;
-  border-radius: 12px;
-}
+        #museum::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color), var(--accent-color), var(--primary-color));
+            background-size: 400% 400%;
+            z-index: -1;
+            animation: gradient 15s ease infinite;
+            opacity: 0.1;
+            border-radius: 12px;
+        }
 
-@keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
 
-.museum-item {
-  width: 100%;
-  animation: fadeIn 0.8s ease;
-}
+        .museum-item {
+            width: 100%;
+            animation: fadeIn 0.8s ease;
+        }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-#museum img {
-  max-width: 100%;
-  max-height: 300px;
-  border: 2px solid var(--primary-color);
-  border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
-  transition: transform 0.3s ease;
-}
+        #museum img {
+            max-width: 100%;
+            max-height: 300px;
+            border: 2px solid var(--primary-color);
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+            transition: transform 0.3s ease;
+        }
 
-#museum img:hover {
-  transform: scale(1.02);
-}
+        #museum img:hover {
+            transform: scale(1.02);
+        }
 
-#museum pre {
-  background-color: var(--card-bg);
-  padding: 15px;
-  border: 1px solid var(--primary-color);
-  border-radius: 5px;
-  overflow-x: auto;
-  width: 100%;
-  text-align: left;
-  box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
-}
+        #museum pre {
+            background-color: var(--card-bg);
+            padding: 15px;
+            border: 1px solid var(--primary-color);
+            border-radius: 5px;
+            overflow-x: auto;
+            width: 100%;
+            text-align: left;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+        }
 
-#museum blockquote {
-  font-style: italic;
-  font-size: 1.5rem;
-  margin: 20px;
-  padding: 20px;
-  border-left: 4px solid var(--secondary-color);
-  background-color: rgba(255, 0, 255, 0.05);
-  border-radius: 0 10px 10px 0;
-}
+        #museum blockquote {
+            font-style: italic;
+            font-size: 1.5rem;
+            margin: 20px;
+            padding: 20px;
+            border-left: 4px solid var(--secondary-color);
+            background-color: rgba(255, 0, 255, 0.05);
+            border-radius: 0 10px 10px 0;
+        }
 
-#museum .caption {
-  margin-top: 10px;
-  font-size: 0.9rem;
-  color: var(--accent-color);
-}
+        #museum .caption {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: var(--accent-color);
+        }
 
-#museum .year {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: var(--card-bg);
-  padding: 5px 10px;
-  border-radius: 15px;
-  font-size: 0.8rem;
-  border: 1px solid var(--primary-color);
-}
+        #museum .year {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--card-bg);
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            border: 1px solid var(--primary-color);
+        }
 
-.controls {
-  display: flex;
-  gap: 15px;
-  margin-top: 20px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
 
-button {
-  background-color: var(--bg-color);
-  color: var(--primary-color);
-  border: 2px solid var(--primary-color);
-  padding: 10px 20px;
-  cursor: pointer;
-  font-family: 'Courier New', monospace;
-  font-weight: bold;
-  transition: all 0.3s ease;
-  border-radius: 5px;
-  position: relative;
-  overflow: hidden;
-}
+        button {
+            background-color: var(--bg-color);
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+        }
 
-button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(0, 255, 0, 0.2), transparent);
-  transition: left 0.5s;
-}
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 0, 0.2), transparent);
+            transition: left 0.5s;
+        }
 
-button:hover::before {
-  left: 100%;
-}
+        button:hover::before {
+            left: 100%;
+        }
 
-button:hover {
-  background-color: var(--primary-color);
-  color: var(--bg-color);
-  box-shadow: 0 0 15px var(--primary-color);
-}
+        button:hover {
+            background-color: var(--primary-color);
+            color: var(--bg-color);
+            box-shadow: 0 0 15px var(--primary-color);
+        }
 
-#autoBtn.active {
-  background-color: var(--secondary-color);
-  color: var(--bg-color);
-  border-color: var(--secondary-color);
-}
+        #autoBtn.active {
+            background-color: var(--secondary-color);
+            color: var(--bg-color);
+            border-color: var(--secondary-color);
+        }
 
-footer {
-  margin-top: 40px;
-  font-size: 0.8rem;
-  color: var(--text-color);
-  border-top: 1px solid var(--primary-color);
-  padding-top: 15px;
-  width: 100%;
-}
+        footer {
+            margin-top: 40px;
+            font-size: 0.8rem;
+            color: var(--text-color);
+            border-top: 1px solid var(--primary-color);
+            padding-top: 15px;
+            width: 100%;
+        }
 
-.progress-bar {
-  width: 100%;
-  height: 4px;
-  background-color: var(--card-bg);
-  margin-top: 10px;
-  border-radius: 2px;
-  overflow: hidden;
-}
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background-color: var(--card-bg);
+            margin-top: 10px;
+            border-radius: 2px;
+            overflow: hidden;
+        }
 
-.progress {
-  height: 100%;
-  background-color: var(--primary-color);
-  width: 0%;
-  transition: width 0.1s linear;
-}
+        .progress {
+            height: 100%;
+            background-color: var(--primary-color);
+            width: 0%;
+            transition: width 0.1s linear;
+        }
 
-@media (max-width: 600px) {
-  h1 {
-    font-size: 1.8rem;
-  }
-  
-  #museum {
-    min-height: 300px;
-    padding: 15px;
-  }
-  
-  .controls {
-    flex-direction: column;
-    width: 100%;
-  }
-  
-  button {
-    width: 100%;
-  }
-}
-</style>
+        .ascii-art {
+            font-family: monospace;
+            white-space: pre;
+            line-height: 1.2;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            #museum {
+                min-height: 300px;
+                padding: 15px;
+            }
+            
+            .controls {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            button {
+                width: 100%;
+            }
+            
+            .ascii-art {
+                font-size: 8px;
+            }
+        }
+    </style>
 </head>
 <body>
 
 <header>
-  <h1>Random Internet Museum</h1>
-  <div class="subtitle">A nostalgic journey through digital history</div>
+    <h1>Random Internet Museum</h1>
+    <div class="subtitle">A nostalgic journey through digital history</div>
 </header>
 
 <div id="museum">
-  <div class="museum-item">
-    <p>Welcome to the Random Internet Museum! Click "Next" to explore.</p>
-  </div>
+    <div class="museum-item">
+        <p>Welcome to the Random Internet Museum! Click "Next" to explore.</p>
+    </div>
 </div>
 
 <div class="controls">
-  <button id="prevBtn">Previous</button>
-  <button id="nextBtn">Next</button>
-  <button id="autoBtn">Auto Play</button>
-  <button id="infoBtn">Info</button>
+    <button id="prevBtn">Previous</button>
+    <button id="nextBtn">Next</button>
+    <button id="autoBtn">Auto Play</button>
+    <button id="infoBtn">Info</button>
 </div>
 
 <div class="progress-bar">
-  <div class="progress" id="progress"></div>
+    <div class="progress" id="progress"></div>
 </div>
 
 <footer>BY Mohamad Zahir & Mohammed Osama</footer>
 
 <script>
-const museumDiv = document.getElementById('museum');
-const nextBtn = document.getElementById('nextBtn');
-const prevBtn = document.getElementById('prevBtn');
-const autoBtn = document.getElementById('autoBtn');
-const infoBtn = document.getElementById('infoBtn');
-const progressBar = document.getElementById('progress');
+    const museumDiv = document.getElementById('museum');
+    const nextBtn = document.getElementById('nextBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const autoBtn = document.getElementById('autoBtn');
+    const infoBtn = document.getElementById('infoBtn');
+    const progressBar = document.getElementById('progress');
 
-// All content embedded
-const data = [
-  { 
-    type: "image", 
-    src: "https://upload.wikimedia.org/wikipedia/commons/3/3b/Geocities_icon.png", 
-    caption: "A Geocities page from 1999 - The early days of personal web publishing",
-    year: "1999"
-  },
-  { 
-    type: "quote", 
-    text: "Life is like the old internet: full of surprises and unexpected connections.", 
-    author: "Digital Philosopher",
-    year: "2001"
-  },
-  { 
-    type: "code", 
-    text: "console.log('Hello from 1998');\n// This was the sound of web development\n// before frameworks took over the world", 
-    year: "1998"
-  },
-  { 
-    type: "image", 
-    src: "https://upload.wikimedia.org/wikipedia/commons/4/45/Old_Internet_Icon.png", 
-    caption: "Classic web icon from early 2000s - The dawn of broadband",
-    year: "2002"
-  },
-  { 
-    type: "quote", 
-    text: "Exploration is the joy of the curious mind. The web was our new frontier.", 
-    author: "Early Netizen",
-    year: "1997"
-  },
-  { 
-    type: "code", 
-    text: "alert('Welcome to my website!');\n// Popup windows were both a blessing and a curse\n// in the early days of web interactivity", 
-    year: "2000"
-  },
-  { 
-    type: "image", 
-    src: "https://upload.wikimedia.org/wikipedia/commons/d/d3/Old_computer_icon.png", 
-    caption: "Early PC icon from 90s web - When computers were beige and bulky",
-    year: "1995"
-  },
-  { 
-    type: "quote", 
-    text: "The web is a playground for the imaginative. We built worlds with just text and a few images.", 
-    author: "Web Pioneer",
-    year: "1996"
-  },
-  { 
-    type: "code", 
-    text: "<blink>Welcome to my page!</blink>\n<!-- The blink tag - loved by some, hated by many -->", 
-    year: "1997"
-  },
-  { 
-    type: "image", 
-    src: "https://upload.wikimedia.org/wikipedia/commons/7/7e/Netscape_logo_1995-1999.png", 
-    caption: "Netscape Navigator - The browser that started it all for many",
-    year: "1995"
-  },
-  { 
-    type: "quote", 
-    text: "We didn't have algorithms deciding what we saw. We surfed, we discovered, we got lost.", 
-    author: "Retro Surfer",
-    year: "2003"
-  },
-  { 
-    type: "code", 
-    text: "background-color: #000080;\ncolor: #FFFFFF;\nfont-family: 'Comic Sans MS';\n/* The classic 90s web design aesthetic */", 
-    year: "1999"
-  }
-];
+    // All content embedded
+    const data = [
+        { 
+            type: "image", 
+            src: "https://cdn.pixabay.com/photo/2017/06/20/08/12/mainframe-2421769_1280.png", 
+            caption: "A classic mainframe computer from the 1980s",
+            year: "1985"
+        },
+        { 
+            type: "quote", 
+            text: "The internet is becoming the town square for the global village of tomorrow.", 
+            author: "Bill Gates",
+            year: "1999"
+        },
+        { 
+            type: "code", 
+            text: "<html>\n<head>\n<title>My First Website</title>\n</head>\n<body>\n<h1>Welcome to my site!</h1>\n<p>Under construction...</p>\n</body>\n</html>", 
+            year: "1995"
+        },
+        { 
+            type: "ascii", 
+            text: "   _____\n  /     \\\n /       \\\n|  O   O  |\n|    ∆    |\n \\  ---  /\n  \\_____/\n   COMPUTER",
+            caption: "Early computer ASCII art",
+            year: "1990"
+        },
+        { 
+            type: "image", 
+            src: "https://cdn.pixabay.com/photo/2013/07/12/18/39/smartphone-153650_1280.png", 
+            caption: "Early mobile phone with internet capability",
+            year: "2000"
+        },
+        { 
+            type: "quote", 
+            text: "The Web as I envisaged it, we have not seen it yet. The future is still so much bigger than the past.", 
+            author: "Tim Berners-Lee",
+            year: "2005"
+        },
+        { 
+            type: "code", 
+            text: "// JavaScript in the early days\nfunction validateForm() {\n  if (document.forms[0].elements[0].value == '') {\n    alert('Please fill all fields!');\n    return false;\n  }\n  return true;\n}", 
+            year: "1998"
+        },
+        { 
+            type: "image", 
+            src: "https://cdn.pixabay.com/photo/2015/09/21/14/24/supercomputer-949072_1280.jpg", 
+            caption: "Supercomputer processing data in the 1990s",
+            year: "1993"
+        },
+        { 
+            type: "quote", 
+            text: "We are all now connected by the Internet, like neurons in a giant brain.", 
+            author: "Stephen Hawking",
+            year: "2001"
+        },
+        { 
+            type: "ascii", 
+            text: "  /\\_/\\\n ( o.o )\n  > ^ <\n INTERNET CAT",
+            caption: "Classic internet cat ASCII art",
+            year: "1998"
+        },
+        { 
+            type: "image", 
+            src: "https://cdn.pixabay.com/photo/2016/11/19/20/55/apple-1841552_1280.jpg", 
+            caption: "Early personal computers revolutionized home computing",
+            year: "1984"
+        },
+        { 
+            type: "quote", 
+            text: "The internet is the first thing that humanity has built that humanity doesn't understand, the largest experiment in anarchy that we have ever had.", 
+            author: "Eric Schmidt",
+            year: "2008"
+        },
+        { 
+            type: "code", 
+            text: "<!-- The infamous blink tag -->\n<blink>Look at me! I'm blinking!</blink>\n\n<!-- The marquee tag -->\n<marquee>Scrolling text was so cool!</marquee>", 
+            year: "1997"
+        },
+        { 
+            type: "image", 
+            src: "https://cdn.pixabay.com/photo/2017/05/29/18/22/robot-2354686_1280.jpg", 
+            caption: "Early concepts of AI and robotics on the internet",
+            year: "2002"
+        },
+        { 
+            type: "quote", 
+            text: "The internet could be a very positive step towards education, organization and participation in a meaningful society.", 
+            author: "Noam Chomsky",
+            year: "2003"
+        },
+        { 
+            type: "ascii", 
+            text: " _______  \n|       | \n| ?   ? | \n|   +   | \n|  ___  | \n|_______| \n  MYSTERY BOX",
+            caption: "ASCII art representing the mystery of early internet",
+            year: "1994"
+        },
+        { 
+            type: "image", 
+            src: "https://cdn.pixabay.com/photo/2016/11/21/16/21/board-1846276_1280.jpg", 
+            caption: "Early internet server room with network equipment",
+            year: "1999"
+        },
+        { 
+            type: "quote", 
+            text: "The internet is so big, so powerful and pointless that for some people it is a complete substitute for life.", 
+            author: "Andrew Brown",
+            year: "2006"
+        },
+        { 
+            type: "code", 
+            text: "// Early AJAX implementation\nvar xmlhttp;\nif (window.XMLHttpRequest) {\n  xmlhttp = new XMLHttpRequest();\n} else {\n  xmlhttp = new ActiveXObject('Microsoft.XMLHTTP');\n}", 
+            year: "2005"
+        },
+        { 
+            type: "image", 
+            src: "https://cdn.pixabay.com/photo/2015/01/08/18/25/desk-593327_1280.jpg", 
+            caption: "A typical internet user's desk in the early 2000s",
+            year: "2003"
+        }
+    ];
 
-let currentIndex = 0;
-let autoPlayInterval = null;
-let autoPlaySpeed = 5000; // 5 seconds
+    let currentIndex = 0;
+    let autoPlayInterval = null;
+    let autoPlaySpeed = 5000; // 5 seconds
 
-function showItem(index) {
-  if (index < 0) index = data.length - 1;
-  if (index >= data.length) index = 0;
-  
-  currentIndex = index;
-  const item = data[currentIndex];
-  museumDiv.innerHTML = '';
-  
-  const itemContainer = document.createElement('div');
-  itemContainer.className = 'museum-item';
-  
-  // Add year badge
-  const yearBadge = document.createElement('div');
-  yearBadge.className = 'year';
-  yearBadge.textContent = item.year;
-  itemContainer.appendChild(yearBadge);
-  
-  if (item.type === 'image') {
-    const img = document.createElement('img');
-    img.src = item.src;
-    img.alt = item.caption;
-    itemContainer.appendChild(img);
-    const caption = document.createElement('div');
-    caption.className = 'caption';
-    caption.textContent = item.caption;
-    itemContainer.appendChild(caption);
-  } else if (item.type === 'quote') {
-    const blockquote = document.createElement('blockquote');
-    blockquote.textContent = `"${item.text}"`;
-    itemContainer.appendChild(blockquote);
-    if (item.author) {
-      const author = document.createElement('p');
-      author.textContent = `- ${item.author}`;
-      author.style.textAlign = 'right';
-      author.style.marginTop = '10px';
-      author.style.fontStyle = 'normal';
-      itemContainer.appendChild(author);
+    function showItem(index) {
+        if (index < 0) index = data.length - 1;
+        if (index >= data.length) index = 0;
+        
+        currentIndex = index;
+        const item = data[currentIndex];
+        museumDiv.innerHTML = '';
+        
+        const itemContainer = document.createElement('div');
+        itemContainer.className = 'museum-item';
+        
+        // Add year badge
+        const yearBadge = document.createElement('div');
+        yearBadge.className = 'year';
+        yearBadge.textContent = item.year;
+        itemContainer.appendChild(yearBadge);
+        
+        if (item.type === 'image') {
+            const img = document.createElement('img');
+            img.src = item.src;
+            img.alt = item.caption;
+            img.onerror = function() {
+                // If image fails to load, show a placeholder
+                this.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300"><rect width="400" height="300" fill="%23111" stroke="%230f0"/><text x="200" y="150" text-anchor="middle" fill="%230f0" font-family="monospace">Image Not Available</text></svg>';
+            };
+            itemContainer.appendChild(img);
+            const caption = document.createElement('div');
+            caption.className = 'caption';
+            caption.textContent = item.caption;
+            itemContainer.appendChild(caption);
+        } else if (item.type === 'quote') {
+            const blockquote = document.createElement('blockquote');
+            blockquote.textContent = `"${item.text}"`;
+            itemContainer.appendChild(blockquote);
+            if (item.author) {
+                const author = document.createElement('p');
+                author.textContent = `- ${item.author}`;
+                author.style.textAlign = 'right';
+                author.style.marginTop = '10px';
+                author.style.fontStyle = 'normal';
+                itemContainer.appendChild(author);
+            }
+        } else if (item.type === 'code') {
+            const pre = document.createElement('pre');
+            pre.textContent = item.text;
+            itemContainer.appendChild(pre);
+        } else if (item.type === 'ascii') {
+            const asciiDiv = document.createElement('div');
+            asciiDiv.className = 'ascii-art';
+            asciiDiv.textContent = item.text;
+            itemContainer.appendChild(asciiDiv);
+            if (item.caption) {
+                const caption = document.createElement('div');
+                caption.className = 'caption';
+                caption.textContent = item.caption;
+                itemContainer.appendChild(caption);
+            }
+        }
+        
+        museumDiv.appendChild(itemContainer);
+        
+        // Reset and start progress bar
+        progressBar.style.width = '0%';
+        if (autoPlayInterval) {
+            setTimeout(() => {
+                progressBar.style.width = '100%';
+            }, 10);
+        }
     }
-  } else if (item.type === 'code') {
-    const pre = document.createElement('pre');
-    pre.textContent = item.text;
-    itemContainer.appendChild(pre);
-  }
-  
-  museumDiv.appendChild(itemContainer);
-  
-  // Reset and start progress bar
-  progressBar.style.width = '0%';
-  if (autoPlayInterval) {
-    setTimeout(() => {
-      progressBar.style.width = '100%';
-    }, 10);
-  }
-}
 
-function nextItem() {
-  showItem(currentIndex + 1);
-}
+    function nextItem() {
+        showItem(currentIndex + 1);
+    }
 
-function prevItem() {
-  showItem(currentIndex - 1);
-}
+    function prevItem() {
+        showItem(currentIndex - 1);
+    }
 
-function toggleAutoPlay() {
-  if (autoPlayInterval) {
-    clearInterval(autoPlayInterval);
-    autoPlayInterval = null;
-    autoBtn.textContent = 'Auto Play';
-    autoBtn.classList.remove('active');
-    progressBar.style.width = '0%';
-  } else {
-    autoPlayInterval = setInterval(nextItem, autoPlaySpeed);
-    autoBtn.textContent = 'Stop Auto';
-    autoBtn.classList.add('active');
-    progressBar.style.width = '100%';
-  }
-}
+    function toggleAutoPlay() {
+        if (autoPlayInterval) {
+            clearInterval(autoPlayInterval);
+            autoPlayInterval = null;
+            autoBtn.textContent = 'Auto Play';
+            autoBtn.classList.remove('active');
+            progressBar.style.width = '0%';
+        } else {
+            autoPlayInterval = setInterval(nextItem, autoPlaySpeed);
+            autoBtn.textContent = 'Stop Auto';
+            autoBtn.classList.add('active');
+            progressBar.style.width = '100%';
+        }
+    }
 
-function showInfo() {
-  alert(`Random Internet Museum\n\nTotal Items: ${data.length}\nCurrent Item: ${currentIndex + 1}\n\nThis museum showcases artifacts from the early days of the web, when creativity often outpaced technical constraints. Each item represents a piece of digital history that shaped how we experience the internet today.`);
-}
+    function showInfo() {
+        alert(`Random Internet Museum\n\nTotal Items: ${data.length}\nCurrent Item: ${currentIndex + 1}\n\nThis museum showcases artifacts from the early days of the web, when creativity often outpaced technical constraints. Each item represents a piece of digital history that shaped how we experience the internet today.`);
+    }
 
-// Event listeners
-nextBtn.addEventListener('click', nextItem);
-prevBtn.addEventListener('click', prevItem);
-autoBtn.addEventListener('click', toggleAutoPlay);
-infoBtn.addEventListener('click', showInfo);
+    // Event listeners
+    nextBtn.addEventListener('click', nextItem);
+    prevBtn.addEventListener('click', prevItem);
+    autoBtn.addEventListener('click', toggleAutoPlay);
+    infoBtn.addEventListener('click', showInfo);
 
-// Keyboard navigation
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'ArrowRight') nextItem();
-  if (e.key === 'ArrowLeft') prevItem();
-  if (e.key === ' ') toggleAutoPlay(); // Spacebar toggles autoplay
-});
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') nextItem();
+        if (e.key === 'ArrowLeft') prevItem();
+        if (e.key === ' ') {
+            e.preventDefault();
+            toggleAutoPlay();
+        }
+    });
 
-// Show first item
-showItem(0);
+    // Show first item
+    showItem(0);
 </script>
 
 </body>
