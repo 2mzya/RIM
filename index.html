@@ -65,7 +65,7 @@
             color: var(--accent-color);
         }
 
-        /* إعلان SonLLC */
+        /* AD Banner */
         .ad-container {
             position: fixed;
             top: 10px;
@@ -396,7 +396,7 @@
 </head>
 <body>
 
-<!-- إعلان SonLLC -->
+<!-- The AD -->
 <div class="ad-container" id="sonllcAd">
     <button class="close-ad" id="closeAd">×</button>
     <div class="ad-banner">
@@ -431,7 +431,6 @@
     BY <a href="https://x.com/2mzya" class="footer-link" target="_blank">Mohamad Zahir</a> & Mohammed Osama
 </footer>
 
-<!-- إضافة ملف البيانات الخارجي -->
 <script src="museum-data.js"></script>
 
 <script>
@@ -450,7 +449,6 @@
     let autoPlayInterval = null;
     let autoPlaySpeed = 5000; // 5 seconds
 
-    // تهيئة المتحف بعد تحميل البيانات
     function initMuseum() {
         if (typeof museumData !== 'undefined' && museumData.length > 0) {
             data = museumData;
@@ -593,19 +591,18 @@
         }
     });
 
-    // تهيئة المتحف عند تحميل الصفحة
     document.addEventListener('DOMContentLoaded', function() {
-        // تعطيل الأزرار حتى يتم تحميل البيانات
+        
         nextBtn.disabled = true;
         prevBtn.disabled = true;
         autoBtn.disabled = true;
         infoBtn.disabled = true;
         
-        // تهيئة المتحف بعد تحميل البيانات
+      
         if (typeof museumData !== 'undefined') {
             initMuseum();
         } else {
-            // إذا لم يتم تحميل البيانات بعد، انتظر قليلاً ثم حاول مرة أخرى
+            
             setTimeout(initMuseum, 100);
         }
     });
