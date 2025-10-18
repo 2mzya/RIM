@@ -355,6 +355,12 @@
             text-align: center;
         }
 
+        .loading {
+            font-size: 1.2rem;
+            color: var(--accent-color);
+            animation: pulse 1.5s infinite;
+        }
+
         @media (max-width: 600px) {
             h1 {
                 font-size: 1.8rem;
@@ -406,7 +412,7 @@
 
 <div id="museum">
     <div class="museum-item">
-        <p>Welcome to the Random Internet Museum! Click "Next" to explore.</p>
+        <div class="loading">Loading museum artifacts...</div>
     </div>
 </div>
 
@@ -425,6 +431,9 @@
     BY <a href="https://x.com/2mzya" class="footer-link" target="_blank">Mohamad Zahir</a> & Mohammed Osama
 </footer>
 
+<!-- إضافة ملف البيانات الخارجي -->
+<script src="museum-data.js"></script>
+
 <script>
     const museumDiv = document.getElementById('museum');
     const nextBtn = document.getElementById('nextBtn');
@@ -436,131 +445,32 @@
     const closeAd = document.getElementById('closeAd');
     const sonllcAd = document.getElementById('sonllcAd');
 
-    // All content embedded
-    const data = [
-        { 
-            type: "image", 
-            src: "https://cdn.pixabay.com/photo/2017/06/20/08/12/mainframe-2421769_1280.png", 
-            caption: "A classic mainframe computer from the 1980s",
-            year: "1985"
-        },
-        { 
-            type: "quote", 
-            text: "The internet is becoming the town square for the global village of tomorrow.", 
-            author: "Bill Gates",
-            year: "1999"
-        },
-        { 
-            type: "code", 
-            text: "<html>\n<head>\n<title>My First Website</title>\n</head>\n<body>\n<h1>Welcome to my site!</h1>\n<p>Under construction...</p>\n</body>\n</html>", 
-            year: "1995"
-        },
-        { 
-            type: "ascii", 
-            text: "   _____\n  /     \\\n /       \\\n|  O   O  |\n|    ∆    |\n \\  ---  /\n  \\_____/\n   COMPUTER",
-            caption: "Early computer ASCII art",
-            year: "1990"
-        },
-        { 
-            type: "image", 
-            src: "https://cdn.pixabay.com/photo/2013/07/12/18/39/smartphone-153650_1280.png", 
-            caption: "Early mobile phone with internet capability",
-            year: "2000"
-        },
-        { 
-            type: "quote", 
-            text: "The Web as I envisaged it, we have not seen it yet. The future is still so much bigger than the past.", 
-            author: "Tim Berners-Lee",
-            year: "2005"
-        },
-        { 
-            type: "code", 
-            text: "// JavaScript in the early days\nfunction validateForm() {\n  if (document.forms[0].elements[0].value == '') {\n    alert('Please fill all fields!');\n    return false;\n  }\n  return true;\n}", 
-            year: "1998"
-        },
-        { 
-            type: "image", 
-            src: "https://cdn.pixabay.com/photo/2015/09/21/14/24/supercomputer-949072_1280.jpg", 
-            caption: "Supercomputer processing data in the 1990s",
-            year: "1993"
-        },
-        { 
-            type: "quote", 
-            text: "We are all now connected by the Internet, like neurons in a giant brain.", 
-            author: "Stephen Hawking",
-            year: "2001"
-        },
-        { 
-            type: "ascii", 
-            text: "  /\\_/\\\n ( o.o )\n  > ^ <\n INTERNET CAT",
-            caption: "Classic internet cat ASCII art",
-            year: "1998"
-        },
-        { 
-            type: "image", 
-            src: "https://cdn.pixabay.com/photo/2016/11/19/20/55/apple-1841552_1280.jpg", 
-            caption: "Early personal computers revolutionized home computing",
-            year: "1984"
-        },
-        { 
-            type: "quote", 
-            text: "The internet is the first thing that humanity has built that humanity doesn't understand, the largest experiment in anarchy that we have ever had.", 
-            author: "Eric Schmidt",
-            year: "2008"
-        },
-        { 
-            type: "code", 
-            text: "<!-- The infamous blink tag -->\n<blink>Look at me! I'm blinking!</blink>\n\n<!-- The marquee tag -->\n<marquee>Scrolling text was so cool!</marquee>", 
-            year: "1997"
-        },
-        { 
-            type: "image", 
-            src: "https://cdn.pixabay.com/photo/2017/05/29/18/22/robot-2354686_1280.jpg", 
-            caption: "Early concepts of AI and robotics on the internet",
-            year: "2002"
-        },
-        { 
-            type: "quote", 
-            text: "The internet could be a very positive step towards education, organization and participation in a meaningful society.", 
-            author: "Noam Chomsky",
-            year: "2003"
-        },
-        { 
-            type: "ascii", 
-            text: " _______  \n|       | \n| ?   ? | \n|   +   | \n|  ___  | \n|_______| \n  MYSTERY BOX",
-            caption: "ASCII art representing the mystery of early internet",
-            year: "1994"
-        },
-        { 
-            type: "image", 
-            src: "https://cdn.pixabay.com/photo/2016/11/21/16/21/board-1846276_1280.jpg", 
-            caption: "Early internet server room with network equipment",
-            year: "1999"
-        },
-        { 
-            type: "quote", 
-            text: "The internet is so big, so powerful and pointless that for some people it is a complete substitute for life.", 
-            author: "Andrew Brown",
-            year: "2006"
-        },
-        { 
-            type: "code", 
-            text: "// Early AJAX implementation\nvar xmlhttp;\nif (window.XMLHttpRequest) {\n  xmlhttp = new XMLHttpRequest();\n} else {\n  xmlhttp = new ActiveXObject('Microsoft.XMLHTTP');\n}", 
-            year: "2005"
-        },
-        { 
-            type: "image", 
-            src: "https://cdn.pixabay.com/photo/2015/01/08/18/25/desk-593327_1280.jpg", 
-            caption: "A typical internet user's desk in the early 2000s",
-            year: "2003"
-        }
-    ];
-
+    let data = [];
     let currentIndex = 0;
     let autoPlayInterval = null;
     let autoPlaySpeed = 5000; // 5 seconds
 
+    // تهيئة المتحف بعد تحميل البيانات
+    function initMuseum() {
+        if (typeof museumData !== 'undefined' && museumData.length > 0) {
+            data = museumData;
+            showItem(0);
+            enableControls();
+        } else {
+            museumDiv.innerHTML = '<div class="museum-item"><p>Error loading museum data. Please refresh the page.</p></div>';
+        }
+    }
+
+    function enableControls() {
+        nextBtn.disabled = false;
+        prevBtn.disabled = false;
+        autoBtn.disabled = false;
+        infoBtn.disabled = false;
+    }
+
     function showItem(index) {
+        if (data.length === 0) return;
+        
         if (index < 0) index = data.length - 1;
         if (index >= data.length) index = 0;
         
@@ -658,7 +568,7 @@
     }
 
     function visitSonLLC() {
-        window.open('https://SonLLC.GitHub.io/Download', '_blank');
+        window.open('https://SonLLC.github.io', '_blank');
     }
 
     function closeAdBanner() {
@@ -683,8 +593,22 @@
         }
     });
 
-    // Show first item
-    showItem(0);
+    // تهيئة المتحف عند تحميل الصفحة
+    document.addEventListener('DOMContentLoaded', function() {
+        // تعطيل الأزرار حتى يتم تحميل البيانات
+        nextBtn.disabled = true;
+        prevBtn.disabled = true;
+        autoBtn.disabled = true;
+        infoBtn.disabled = true;
+        
+        // تهيئة المتحف بعد تحميل البيانات
+        if (typeof museumData !== 'undefined') {
+            initMuseum();
+        } else {
+            // إذا لم يتم تحميل البيانات بعد، انتظر قليلاً ثم حاول مرة أخرى
+            setTimeout(initMuseum, 100);
+        }
+    });
 </script>
 
 </body>
