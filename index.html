@@ -219,6 +219,11 @@
             border-color: var(--secondary-color);
         }
 
+        .visit-button {
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
         footer {
             margin-top: 40px;
             font-size: 0.8rem;
@@ -226,6 +231,17 @@
             border-top: 1px solid var(--primary-color);
             padding-top: 15px;
             width: 100%;
+        }
+
+        .footer-link {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
         }
 
         .progress-bar {
@@ -301,7 +317,14 @@
     <div class="progress" id="progress"></div>
 </div>
 
-<footer>BY Mohamad Zahir & Mohammed Osama</footer>
+<!-- زر زيارة موقع SonLLC -->
+<div class="visit-button">
+    <button id="visitBtn">Visit SonLLC</button>
+</div>
+
+<footer>
+    BY <a href="https://x.com/2mzya" class="footer-link" target="_blank">Mohamad Zahir</a> & Mohammed Osama
+</footer>
 
 <script>
     const museumDiv = document.getElementById('museum');
@@ -309,6 +332,7 @@
     const prevBtn = document.getElementById('prevBtn');
     const autoBtn = document.getElementById('autoBtn');
     const infoBtn = document.getElementById('infoBtn');
+    const visitBtn = document.getElementById('visitBtn');
     const progressBar = document.getElementById('progress');
 
     // All content embedded
@@ -532,11 +556,16 @@
         alert(`Random Internet Museum\n\nTotal Items: ${data.length}\nCurrent Item: ${currentIndex + 1}\n\nThis museum showcases artifacts from the early days of the web, when creativity often outpaced technical constraints. Each item represents a piece of digital history that shaped how we experience the internet today.`);
     }
 
+    function visitSonLLC() {
+        window.open('https://SonLLC.GitHub.io/Download', '_blank');
+    }
+
     // Event listeners
     nextBtn.addEventListener('click', nextItem);
     prevBtn.addEventListener('click', prevItem);
     autoBtn.addEventListener('click', toggleAutoPlay);
     infoBtn.addEventListener('click', showInfo);
+    visitBtn.addEventListener('click', visitSonLLC);
 
     // Keyboard navigation
     document.addEventListener('keydown', (e) => {
