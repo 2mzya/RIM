@@ -1,54 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Random Internet Museum</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Random Internet Museum</title>
+<style>
+body {
+    background-color: #000;
+    color: #0f0;
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+}
+#museum img {
+    max-width: 100%;
+    border: 2px solid #0f0;
+    margin-bottom: 10px;
+}
+#museum pre {
+    background-color: #111;
+    padding: 10px;
+    border: 1px solid #0f0;
+    overflow-x: auto;
+}
+button {
+    background-color: #000;
+    color: #0f0;
+    border: 2px solid #0f0;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: 'Courier New', monospace;
+    margin-top: 20px;
+}
+button:hover {
+    background-color: #0f0;
+    color: #000;
+}
+footer {
+    margin-top: 40px;
+    font-size: 0.8rem;
+    color: #0f0;
+}
+</style>
 </head>
 <body>
-    <div id="museum"></div>
-    <button id="nextBtn">Next</button>
-    <footer>BY Mohamad Zahir & Mohammed Osama</footer>
 
-    <script>
-        const museumDiv = document.getElementById('museum');
-        const nextBtn = document.getElementById('nextBtn');
+<div id="museum"></div>
+<button id="nextBtn">Next</button>
+<footer>BY Mohamad Zahir & Mohammed Osama</footer>
 
-        let data = [];
+<script>
+const museumDiv = document.getElementById('museum');
+const nextBtn = document.getElementById('nextBtn');
 
-        async function loadData() {
-            const response = await fetch('data.json');
-            data = await response.json();
-            showRandomItem();
-        }
+// All content embedded
+const data = [
+  { type: "image", src: "https://upload.wikimedia.org/wikipedia/commons/3/3b/Geocities_icon.png", caption: "A Geocities page from 1999" },
+  { type: "quote", text: "Life is like the old internet: full of surprises." },
+  { type: "code", text: "console.log('Hello from 1998');" },
+  { type: "image", src: "https://upload.wikimedia.org/wikipedia/commons/4/45/Old_Internet_Icon.png", caption: "Classic web icon from early 2000s" },
+  { type: "quote", text: "Exploration is the joy of the curious mind." },
+  { type: "code", text: "alert('Random Internet Museum!');" },
+  { type: "image", src: "https://upload.wikimedia.org/wikipedia/commons/d/d3/Old_computer_icon.png", caption: "Early PC icon from 90s web" },
+  { type: "quote", text: "The web is a playground for the imaginative." }
+];
 
-        function showRandomItem() {
-            if(data.length === 0) return;
-            const item = data[Math.floor(Math.random() * data.length)];
-            museumDiv.innerHTML = '';
+function showRandomItem() {
+    if(data.length === 0) return;
+    const item = data[Math.floor(Math.random() * data.length)];
+    museumDiv.innerHTML = '';
 
-            if(item.type === 'image') {
-                const img = document.createElement('img');
-                img.src = item.src;
-                museumDiv.appendChild(img);
-                const caption = document.createElement('p');
-                caption.textContent = item.caption;
-                museumDiv.appendChild(caption);
-            } else if(item.type === 'quote') {
-                const p = document.createElement('p');
-                p.textContent = item.text;
-                museumDiv.appendChild(p);
-            } else if(item.type === 'code') {
-                const pre = document.createElement('pre');
-                pre.textContent = item.text;
-                museumDiv.appendChild(pre);
-            }
-        }
+    if(item.type === 'image') {
+        const img = document.createElement('img');
+        img.src = item.src;
+        museumDiv.appendChild(img);
+        const caption = document.createElement('p');
+        caption.textContent = item.caption;
+        museumDiv.appendChild(caption);
+    } else if(item.type === 'quote') {
+        const p = document.createElement('p');
+        p.textContent = item.text;
+        museumDiv.appendChild(p);
+    } else if(item.type === 'code') {
+        const pre = document.createElement('pre');
+        pre.textContent = item.text;
+        museumDiv.appendChild(pre);
+    }
+}
 
-        nextBtn.addEventListener('click', showRandomItem);
+nextBtn.addEventListener('click', showRandomItem);
 
-        loadData();
-    </script>
+// show first item
+showRandomItem();
+</script>
+
 </body>
 </html>
