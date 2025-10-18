@@ -1,0 +1,8 @@
+[
+  { "type": "image", "src": "https://upload.wikimedia.org/wikipedia/commons/3/3b/Geocities_icon.png", "caption": "A Geocities page from 1999" },
+  { "type": "quote", "text": "Life is like the old internet: full of surprises." },
+  { "type": "code", "text": "console.log('Hello from 1998');" },
+  { "type": "image", "src": "https://upload.wikimedia.org/wikipedia/commons/4/45/Old_Internet_Icon.png", "caption": "Classic web icon from early 2000s" },
+  { "type": "quote", "text": "Exploration is the joy of the curious mind." },
+  { "type": "code", "text": "alert('Random Internet Museum!');" }
+]
