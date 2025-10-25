@@ -65,6 +65,46 @@
             color: var(--accent-color);
         }
 
+        /* Live Visitors Counter */
+        .visitor-counter {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
+            background: var(--card-bg);
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            padding: 10px 15px;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+            font-size: 0.9rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 150px;
+        }
+
+        .counter-label {
+            color: var(--accent-color);
+            font-size: 0.8rem;
+            margin-bottom: 5px;
+        }
+
+        .counter-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .counter-pulse {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            margin-right: 5px;
+            animation: pulse 1.5s infinite;
+        }
+
         /* AD Banner */
         .ad-container {
             position: fixed;
@@ -391,10 +431,27 @@
                 margin: 10px auto;
                 width: 90%;
             }
+
+            .visitor-counter {
+                position: relative;
+                top: auto;
+                left: auto;
+                margin: 10px auto;
+                width: 90%;
+            }
         }
     </style>
 </head>
 <body>
+
+<!-- Live Visitors Counter -->
+<div class="visitor-counter" id="visitorCounter">
+    <div class="counter-label">LIVE VISITORS</div>
+    <div class="counter-value">
+        <span class="counter-pulse"></span>
+        <span id="liveCount">0</span>
+    </div>
+</div>
 
 <!-- The AD -->
 <div class="ad-container" id="sonllcAd">
@@ -432,6 +489,137 @@
 </footer>
 
 <script src="museum-data.js"></script>
+
+<!-- Firebase App (the core Firebase SDK) -->
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+  import { getDatabase, ref, onValue, set, onDisconnect, serverTimestamp, get } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyBstw5bNuq7u6ahJzN94fsRxcLIGNVGk0U",
+    authDomain: "livevisitors2025.firebaseapp.com",
+    databaseURL: "https://livevisitors2025-default-rtdb.firebaseio.com",
+    projectId: "livevisitors2025",
+    storageBucket: "livevisitors2025.firebasestorage.app",
+    messagingSenderId: "550260737631",
+    appId: "1:550260737631:web:d2cc207825df792c057dea",
+    measurementId: "G-K027GT40V1"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const database = getDatabase(app);
+
+  // Visitor tracking
+  class VisitorTracker {
+    constructor() {
+      this.visitorId = this.generateVisitorId();
+      this.visitorRef = ref(database, 'visitors/' + this.visitorId);
+      this.liveVisitorsRef = ref(database, 'liveVisitors');
+      this.statsRef = ref(database, 'stats');
+      
+      this.init();
+    }
+
+    generateVisitorId() {
+      return 'visitor_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    }
+
+    init() {
+      // Set visitor data with timestamp
+      set(this.visitorRef, {
+        timestamp: serverTimestamp(),
+        userAgent: navigator.userAgent
+      });
+
+      // Add to live visitors
+      const liveVisitorRef = ref(database, 'liveVisitors/' + this.visitorId);
+      set(liveVisitorRef, true);
+
+      // Remove from live visitors when user leaves
+      onDisconnect(liveVisitorRef).remove();
+
+      // Listen for live visitor count changes
+      onValue(this.liveVisitorsRef, (snapshot) => {
+        const liveVisitors = snapshot.val();
+        const count = liveVisitors ? Object.keys(liveVisitors).length : 0;
+        document.getElementById('liveCount').textContent = count;
+        
+        // Update daily, weekly, monthly stats (stored but not displayed)
+        this.updateStats(count);
+      });
+    }
+
+    updateStats(liveCount) {
+      const now = new Date();
+      const dateKey = now.toISOString().split('T')[0]; // YYYY-MM-DD
+      const weekKey = this.getWeekKey(now); // YYYY-Www
+      const monthKey = now.toISOString().substring(0, 7); // YYYY-MM
+
+      // Update daily stats
+      const dailyRef = ref(database, `stats/daily/${dateKey}`);
+      get(dailyRef).then((snapshot) => {
+        const dailyData = snapshot.val() || { max: 0, avg: 0, samples: 0 };
+        const newMax = Math.max(dailyData.max, liveCount);
+        const newSamples = dailyData.samples + 1;
+        const newAvg = Math.round(((dailyData.avg * dailyData.samples) + liveCount) / newSamples);
+        
+        set(dailyRef, {
+          max: newMax,
+          avg: newAvg,
+          samples: newSamples,
+          lastUpdated: serverTimestamp()
+        });
+      });
+
+      // Update weekly stats
+      const weeklyRef = ref(database, `stats/weekly/${weekKey}`);
+      get(weeklyRef).then((snapshot) => {
+        const weeklyData = snapshot.val() || { max: 0, avg: 0, samples: 0 };
+        const newMax = Math.max(weeklyData.max, liveCount);
+        const newSamples = weeklyData.samples + 1;
+        const newAvg = Math.round(((weeklyData.avg * weeklyData.samples) + liveCount) / newSamples);
+        
+        set(weeklyRef, {
+          max: newMax,
+          avg: newAvg,
+          samples: newSamples,
+          lastUpdated: serverTimestamp()
+        });
+      });
+
+      // Update monthly stats
+      const monthlyRef = ref(database, `stats/monthly/${monthKey}`);
+      get(monthlyRef).then((snapshot) => {
+        const monthlyData = snapshot.val() || { max: 0, avg: 0, samples: 0 };
+        const newMax = Math.max(monthlyData.max, liveCount);
+        const newSamples = monthlyData.samples + 1;
+        const newAvg = Math.round(((monthlyData.avg * monthlyData.samples) + liveCount) / newSamples);
+        
+        set(monthlyRef, {
+          max: newMax,
+          avg: newAvg,
+          samples: newSamples,
+          lastUpdated: serverTimestamp()
+        });
+      });
+    }
+
+    getWeekKey(date) {
+      const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
+      const pastDaysOfYear = (date - firstDayOfYear) / 86400000;
+      const weekNumber = Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
+      return `${date.getFullYear()}-W${weekNumber.toString().padStart(2, '0')}`;
+    }
+  }
+
+  // Initialize visitor tracking when page loads
+  document.addEventListener('DOMContentLoaded', function() {
+    new VisitorTracker();
+  });
+</script>
 
 <script>
     const museumDiv = document.getElementById('museum');
