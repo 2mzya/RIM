@@ -131,22 +131,38 @@ const closeModal = document.querySelector('.close-modal');
 const infoModal = document.getElementById('infoModal');
 const visitorCount = document.getElementById('visitorCount');
 
-let data = [
-    {type:'image',src:'https://via.placeholder.com/600x300',caption:'Old Internet Image',year:'2005',info:'Information about this image.'},
-    {type:'quote',text:'Old forum quote example',author:'User123',year:'2003',info:'Information about this quote.'},
-    {type:'code',code:'console.log("Hello World");',year:'2007',info:'Example of old web code.'},
-    {type:'ascii',ascii:`
-        ╔═══╗╔═══╗
-        ║╔═╗║║╔═╗║
-        ║╚═╝║║╚═╝║
-        ╚═══╝╚═══╝
-    `,caption:'Old Web Logo',year:'1998',info:'This is an old web logo.'}
-];
-
+let data = [];
 let currentIndex = 0;
 let autoPlayInterval = null;
 let autoPlaySpeed = 5000;
 let isAutoPlaying = false;
+
+// Load museum data from external JS file
+async function loadMuseumData(){
+    try{
+        const response = await fetch('museum-data.js');
+        if(!response.ok) throw new Error('Failed to load museum data');
+        const scriptText = await response.text();
+        const script = document.createElement('script');
+        script.textContent = scriptText;
+        document.head.appendChild(script);
+        setTimeout(()=>{
+            if(typeof museumData!=='undefined' && museumData.length>0){
+                data = museumData;
+                showItem(0);
+            } else {
+                showError('No museum data found.');
+            }
+        },100);
+    }catch(e){
+        console.error(e);
+        showError('Failed to load museum data.');
+    }
+}
+
+function showError(msg){
+    museumDiv.innerHTML = `<div class="error-message">${msg}</div>`;
+}
 
 function showItem(i){
     if(!data.length) return;
@@ -165,17 +181,18 @@ function showItem(i){
     if(item.type==='image'){
         const img=document.createElement('img');
         img.src=item.src;
-        img.alt=item.caption;
-        img.onload=()=>{img.style.opacity='1';};
+        img.alt=item.caption||'Image';
+        img.onload=()=>img.style.opacity='1';
         img.onerror=()=>{img.src='https://via.placeholder.com/600x300?text=Image+Not+Found'; img.alt='Image not available'; img.style.borderColor='var(--secondary-color)';};
-        img.style.opacity='0';
-        img.style.transition='opacity 0.5s ease';
+        img.style.opacity='0'; img.style.transition='opacity 0.5s ease';
         img.addEventListener('click',()=>openImageModal(item.src));
         container.appendChild(img);
-        const caption=document.createElement('div');
-        caption.className='caption';
-        caption.textContent=item.caption;
-        container.appendChild(caption);
+        if(item.caption){
+            const cap=document.createElement('div');
+            cap.className='caption';
+            cap.textContent=item.caption;
+            container.appendChild(cap);
+        }
     } else if(item.type==='quote'){
         const quote=document.createElement('blockquote');
         quote.textContent=`"${item.text}"`;
@@ -183,8 +200,7 @@ function showItem(i){
         if(item.author){
             const author=document.createElement('p');
             author.textContent=`- ${item.author}`;
-            author.style.textAlign='right';
-            author.style.marginTop='10px';
+            author.style.textAlign='right'; author.style.marginTop='10px';
             container.appendChild(author);
         }
     } else if(item.type==='code'){
@@ -209,10 +225,10 @@ function showItem(i){
         pre.style.whiteSpace='pre';
         container.appendChild(pre);
         if(item.caption){
-            const caption=document.createElement('div');
-            caption.className='caption';
-            caption.textContent=item.caption;
-            container.appendChild(caption);
+            const cap=document.createElement('div');
+            cap.className='caption';
+            cap.textContent=item.caption;
+            container.appendChild(cap);
         }
     }
     museumDiv.appendChild(container);
@@ -221,10 +237,12 @@ function showItem(i){
 function nextItem(){showItem(currentIndex+1);}
 function prevItem(){showItem(currentIndex-1);}
 function toggleAutoPlay(){
-    if(isAutoPlaying){ clearInterval(autoPlayInterval); autoPlayInterval=null; autoBtn.textContent='Auto Play'; autoBtn.classList.remove('active'); isAutoPlaying=false; }
-    else { autoPlayInterval=setInterval(nextItem,autoPlaySpeed); autoBtn.textContent='Stop Auto'; autoBtn.classList.add('active'); isAutoPlaying=true; }
+    if(isAutoPlaying){ clearInterval(autoPlayInterval); autoPlayInterval=null; autoBtn.textContent='Auto Play'; autoBtn.classList.remove('active'); isAutoPlaying=false;}
+    else{ autoPlayInterval=setInterval(nextItem,autoPlaySpeed); autoBtn.textContent='Stop Auto'; autoBtn.classList.add('active'); isAutoPlaying=true;}
 }
+
 function openImageModal(src){ modalImage.src=src; imageModal.style.display='flex'; }
+
 function toggleInfo(){
     const item=data[currentIndex];
     if(!item||!item.info) return;
@@ -261,18 +279,18 @@ function setupFirebase(){
         appId: "1:550260737631:web:d2cc207825df792c057dea",
         measurementId: "G-K027GT40V1"
     };
-    if(!firebase.apps.length){firebase.initializeApp(firebaseConfig);}
+    if(!firebase.apps.length) firebase.initializeApp(firebaseConfig);
     const db=firebase.database();
     const visitorsRef=db.ref('visitors/count');
     visitorsRef.on('value',(snapshot)=>{visitorCount.textContent=`👥 Live Visitors: ${snapshot.val()||0}`;});
-    visitorsRef.transaction((c)=>{return (c||0)+1;});
+    visitorsRef.transaction(c=> (c||0)+1);
     const connRef=db.ref('.info/connected');
-    connRef.on('value',(snap)=>{if(snap.val()===true){visitorsRef.onDisconnect().transaction(c=>Math.max(0,(c||0)-1));}});
+    connRef.on('value',(snap)=>{if(snap.val()===true) visitorsRef.onDisconnect().transaction(c=>Math.max(0,(c||0)-1));});
 }
 
 document.addEventListener('DOMContentLoaded',()=>{
     setupEventListeners();
-    showItem(0);
+    loadMuseumData();
     try{ setupFirebase(); } catch(e){ console.error("Firebase failed:",e); visitorCount.textContent="👥 Live Visitors: Unknown"; }
 });
 </script>
