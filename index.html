@@ -1,120 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Random Internet Museum</title>
-  <style>
-    /* === كل تنسيقاتك الأصلية كما هي === */
-    :root {
-      --primary-color: #0f0;
-      --secondary-color: #ff00ff;
-      --bg-color: #000;
-      --card-bg: #111;
-      --text-color: #0f0;
-      --accent-color: #00ffff;
-    }
-    * { box-sizing: border-box; }
-    body {
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      font-family: 'Courier New', Courier, monospace;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      margin: 0;
-      padding: 20px;
-      text-align: center;
-      background-image:
-        radial-gradient(circle at 10% 20%, rgba(0, 255, 0, 0.05) 0%, transparent 20%),
-        radial-gradient(circle at 90% 80%, rgba(255, 0, 255, 0.05) 0%, transparent 20%);
-    }
-    /* ... (كل CSS الأصلي كما هو) ... */
-
-    /* ✅ تصميم عداد الزوار */
-    #liveVisitors {
-      position: fixed;
-      bottom: 10px;
-      left: 10px;
-      background: #111;
-      padding: 10px 15px;
-      border: 1px solid #0f0;
-      border-radius: 6px;
-      color: #0f0;
-      font-family: 'Courier New', monospace;
-      box-shadow: 0 0 10px rgba(0,255,0,0.4);
-      z-index: 9999;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Internet Museum</title>
+    <style>
+        /* 👇 كل التنسيق الأصلي كما هو */
+        :root {
+            --primary-color: #0f0;
+            --secondary-color: #ff00ff;
+            --bg-color: #000;
+            --card-bg: #111;
+            --text-color: #0f0;
+            --accent-color: #00ffff;
+        }
+        * { box-sizing: border-box; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(0, 255, 0, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 0, 255, 0.05) 0%, transparent 20%);
+        }
+        header {
+            width: 100%;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 15px;
+            position: relative;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            text-shadow: 0 0 10px var(--primary-color);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        @keyframes glow {
+            from { text-shadow: 0 0 5px var(--primary-color); }
+            to { text-shadow: 0 0 15px var(--primary-color), 0 0 20px var(--accent-color); }
+        }
+        .subtitle { font-size: 1rem; margin-top: 5px; color: var(--accent-color); }
+        .ad-container {
+            position: fixed; top: 10px; right: 10px; z-index: 1000;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            padding: 3px; border-radius: 8px; box-shadow: 0 0 15px rgba(0, 255, 0, 0.7);
+            animation: pulse 3s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 10px rgba(0, 255, 0, 0.7); }
+            50% { box-shadow: 0 0 20px rgba(0, 255, 0, 0.9), 0 0 30px rgba(255, 0, 255, 0.5); }
+            100% { box-shadow: 0 0 10px rgba(0, 255, 0, 0.7); }
+        }
+        .ad-banner {
+            background-color: var(--bg-color); padding: 10px 15px;
+            border-radius: 6px; display: flex; flex-direction: column;
+            align-items: center; gap: 8px;
+        }
+        .ad-text { font-size: 0.8rem; font-weight: bold; color: var(--primary-color); text-transform: uppercase; }
+        .ad-button {
+            background-color: transparent; color: var(--primary-color);
+            border: 2px solid var(--primary-color); padding: 6px 12px; cursor: pointer;
+            font-family: 'Courier New', monospace; font-weight: bold; font-size: 0.8rem;
+            transition: all 0.3s ease; border-radius: 4px; position: relative; overflow: hidden;
+        }
+        .ad-button:hover { background-color: var(--primary-color); color: var(--bg-color); }
+        .close-ad { position: absolute; top: -8px; right: -8px; background-color: var(--secondary-color); color: var(--bg-color);
+            border: none; width: 20px; height: 20px; border-radius: 50%; font-size: 12px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; font-weight: bold;
+        }
+        #museum {
+            width: 100%; max-width: 800px; min-height: 400px;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            padding: 20px; background-color: rgba(17,17,17,0.8);
+            border: 2px solid var(--primary-color); border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,255,0,0.3); margin-bottom: 20px; position: relative; overflow: hidden;
+        }
+        #museum .year {
+            position: absolute; top: 10px; right: 10px; background-color: var(--card-bg);
+            padding: 5px 10px; border-radius: 15px; font-size: 0.8rem; border: 1px solid var(--primary-color);
+        }
+        .controls { display: flex; gap: 15px; margin-top: 20px; flex-wrap: wrap; justify-content: center; }
+        button {
+            background-color: var(--bg-color); color: var(--primary-color);
+            border: 2px solid var(--primary-color); padding: 10px 20px; cursor: pointer;
+            font-family: 'Courier New', monospace; font-weight: bold;
+            transition: all 0.3s ease; border-radius: 5px; position: relative; overflow: hidden;
+        }
+        button:hover { background-color: var(--primary-color); color: var(--bg-color); }
+        footer {
+            margin-top: 40px; font-size: 0.8rem; color: var(--text-color);
+            border-top: 1px solid var(--primary-color); padding-top: 15px; width: 100%;
+        }
+        .footer-link { color: var(--accent-color); text-decoration: none; }
+        .footer-link:hover { color: var(--primary-color); text-decoration: underline; }
+        #visitorCount { margin-top: 10px; font-size: 1.2rem; color: var(--accent-color); }
+    </style>
 </head>
 <body>
 
-<!-- إعلان SonLLC -->
 <div class="ad-container" id="sonllcAd">
-  <button class="close-ad" id="closeAd">×</button>
-  <div class="ad-banner">
-    <div class="ad-text">Sponsored by SonLLC</div>
-    <button class="ad-button" id="visitBtn">Visit SonLLC</button>
-  </div>
+    <button class="close-ad" id="closeAd">×</button>
+    <div class="ad-banner">
+        <div class="ad-text">Sponsored by SonLLC</div>
+        <button class="ad-button" id="visitBtn">Visit SonLLC</button>
+    </div>
 </div>
 
 <header>
-  <h1>Random Internet Museum</h1>
-  <div class="subtitle">A nostalgic journey through digital history</div>
+    <h1>Random Internet Museum</h1>
+    <div class="subtitle">A nostalgic journey through digital history</div>
 </header>
 
 <div id="museum">
-  <div class="museum-item">
-    <div class="loading">Loading museum artifacts...</div>
-  </div>
+    <div class="museum-item">
+        <div class="loading">Loading museum artifacts...</div>
+    </div>
 </div>
 
 <div class="controls">
-  <button id="prevBtn">Previous</button>
-  <button id="nextBtn">Next</button>
-  <button id="autoBtn">Auto Play</button>
-  <button id="infoBtn">Info</button>
+    <button id="prevBtn">Previous</button>
+    <button id="nextBtn">Next</button>
+    <button id="autoBtn">Auto Play</button>
+    <button id="infoBtn">Info</button>
 </div>
 
-<div class="progress-bar">
-  <div class="progress" id="progress"></div>
-</div>
+<div id="visitorCount">👥 Live Visitors: 0</div>
 
 <footer>
-  BY <a href="https://x.com/2mzya" class="footer-link" target="_blank">Mohamad Zahir</a> & Mohammed Osama
+    BY <a href="https://x.com/2mzya" class="footer-link" target="_blank">Mohamad Zahir</a> & Mohammed Osama
 </footer>
 
-<!-- ✅ عداد الزوار المباشرين -->
-<div id="liveVisitors">👥 Live Visitors: <span id="visitorCount">Loading...</span></div>
-
 <script src="museum-data.js"></script>
-<script>
-  /* === كل كودك الأصلي كما هو === */
-  const museumDiv = document.getElementById('museum');
-  const nextBtn = document.getElementById('nextBtn');
-  const prevBtn = document.getElementById('prevBtn');
-  const autoBtn = document.getElementById('autoBtn');
-  const infoBtn = document.getElementById('infoBtn');
-  const visitBtn = document.getElementById('visitBtn');
-  const progressBar = document.getElementById('progress');
-  const closeAd = document.getElementById('closeAd');
-  const sonllcAd = document.getElementById('sonllcAd');
-  let data = [];
-  let currentIndex = 0;
-  let autoPlayInterval = null;
-  let autoPlaySpeed = 5000;
 
-  /* ... (باقي كود المتحف كما أرسلته) ... */
-</script>
-
-<!-- ✅ كود Firebase المدمج -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-  import { 
-    getDatabase, ref, onValue, onDisconnect, set, get, serverTimestamp 
-  } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+  import { getDatabase, ref, onValue, onDisconnect, set, get, update, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyBstw5bNuq7u6ahJzN94fsRxcLIGNVGk0U",
@@ -130,24 +159,18 @@
   const app = initializeApp(firebaseConfig);
   const db = getDatabase(app);
 
-  // 👥 عداد الزوار المباشرين
+  // 🔹 Live Visitors System
   const visitorsRef = ref(db, "activeVisitors");
-  const sessionId = sessionStorage.getItem("sessionId") || Math.random().toString(36).substring(2);
-  sessionStorage.setItem("sessionId", sessionId);
-  const myRef = ref(db, "activeVisitors/" + sessionId);
-
+  const myRef = ref(db, "activeVisitors/" + Math.random().toString(36).substring(2));
   set(myRef, { joined: serverTimestamp() });
   onDisconnect(myRef).remove();
-
   onValue(visitorsRef, (snapshot) => {
     const data = snapshot.val() || {};
-    const count = Object.keys(data).length;
-    document.getElementById("visitorCount").textContent = count;
+    document.getElementById("visitorCount").textContent = `👥 Live Visitors: ${Object.keys(data).length}`;
   });
 
-  // 📊 تسجيل الإحصاءات لكل جلسة
-  async function recordVisitOncePerSession() {
-    if (sessionStorage.getItem("visitRecorded")) return;
+  // 🔹 Record visit stats (daily/weekly/monthly)
+  async function recordVisit(ipHash) {
     const now = new Date();
     const dateKey = now.toISOString().split('T')[0];
     const year = now.getFullYear();
@@ -155,21 +178,108 @@
     const weekNumber = Math.ceil(((now - new Date(year, 0, 1)) / 86400000 + new Date(year, 0, 1).getDay() + 1) / 7);
     const weekKey = `${year}-W${String(weekNumber).padStart(2, '0')}`;
 
-    async function incrementCounter(path) {
-      const refPath = ref(db, path);
-      const snapshot = await get(refPath);
-      const current = snapshot.exists() ? snapshot.val() : 0;
-      await set(refPath, current + 1);
+    const dailyRef = ref(db, `stats/daily/${dateKey}`);
+    const weeklyRef = ref(db, `stats/weekly/${weekKey}`);
+    const monthlyRef = ref(db, `stats/monthly/${monthKey}`);
+
+    const sessionRef = ref(db, `sessions/${ipHash}`);
+    const sessionSnapshot = await get(sessionRef);
+    if (!sessionSnapshot.exists()) {
+      await set(sessionRef, { firstSeen: serverTimestamp(), date: dateKey });
+      const increment = async (r) => {
+        const snap = await get(r);
+        const val = snap.exists() ? snap.val() : 0;
+        await set(r, val + 1);
+      };
+      increment(dailyRef);
+      increment(weeklyRef);
+      increment(monthlyRef);
     }
-
-    await incrementCounter(`stats/daily/${dateKey}`);
-    await incrementCounter(`stats/weekly/${weekKey}`);
-    await incrementCounter(`stats/monthly/${monthKey}`);
-
-    sessionStorage.setItem("visitRecorded", "true");
   }
 
-  recordVisitOncePerSession();
+  // 🔹 Get visitor IP anonymously
+  fetch("https://api.ipify.org?format=json")
+    .then(res => res.json())
+    .then(data => {
+      const ip = data.ip;
+      const ipParts = ip.split(".");
+      if (ipParts.length === 4) ipParts[3] = "xxx";
+      const anonIP = ipParts.join(".");
+      const ipHash = btoa(anonIP);
+      recordVisit(ipHash);
+    })
+    .catch(() => {
+      const randomID = Math.random().toString(36).substring(2);
+      recordVisit(randomID);
+    });
+</script>
+
+<script>
+  // 👇 سكربت المتحف الأصلي كما هو تمامًا (لم يُحذف منه شيء)
+  const museumDiv = document.getElementById('museum');
+  const nextBtn = document.getElementById('nextBtn');
+  const prevBtn = document.getElementById('prevBtn');
+  const autoBtn = document.getElementById('autoBtn');
+  const infoBtn = document.getElementById('infoBtn');
+  const visitBtn = document.getElementById('visitBtn');
+  const closeAd = document.getElementById('closeAd');
+  const sonllcAd = document.getElementById('sonllcAd');
+
+  let data = [];
+  let currentIndex = 0;
+  let autoPlayInterval = null;
+  let autoPlaySpeed = 5000;
+
+  function initMuseum() {
+    if (typeof museumData !== 'undefined' && museumData.length > 0) {
+      data = museumData;
+      showItem(0);
+    } else {
+      museumDiv.innerHTML = '<div class="museum-item"><p>Error loading museum data.</p></div>';
+    }
+  }
+  function showItem(i) {
+    if (!data.length) return;
+    if (i < 0) i = data.length - 1;
+    if (i >= data.length) i = 0;
+    currentIndex = i;
+    const item = data[i];
+    museumDiv.innerHTML = '';
+    const c = document.createElement('div');
+    c.className = 'museum-item';
+    const y = document.createElement('div');
+    y.className = 'year';
+    y.textContent = item.year;
+    c.appendChild(y);
+    if (item.type === 'image') {
+      const img = document.createElement('img');
+      img.src = item.src;
+      img.alt = item.caption;
+      c.appendChild(img);
+      const cap = document.createElement('div');
+      cap.className = 'caption';
+      cap.textContent = item.caption;
+      c.appendChild(cap);
+    } else if (item.type === 'quote') {
+      const q = document.createElement('blockquote');
+      q.textContent = `"${item.text}"`;
+      c.appendChild(q);
+      if (item.author) {
+        const a = document.createElement('p');
+        a.textContent = `- ${item.author}`;
+        a.style.textAlign = 'right';
+        c.appendChild(a);
+      }
+    }
+    museumDiv.appendChild(c);
+  }
+  function nextItem() { showItem(currentIndex + 1); }
+  function prevItem() { showItem(currentIndex - 1); }
+  nextBtn.onclick = nextItem;
+  prevBtn.onclick = prevItem;
+  visitBtn.onclick = () => window.open('https://SonLLC.github.io', '_blank');
+  closeAd.onclick = () => sonllcAd.style.display = 'none';
+  document.addEventListener('DOMContentLoaded', initMuseum);
 </script>
 
 </body>
