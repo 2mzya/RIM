@@ -204,6 +204,10 @@
             font-size: 1.2rem;
             padding: 20px;
         }
+        .loading {
+            color: var(--accent-color);
+            font-size: 1.2rem;
+        }
     </style>
 </head>
 <body>
@@ -234,7 +238,7 @@
     <button id="infoBtn">Info</button>
 </div>
 
-<div id="visitorCount">👥 Live Visitors: 0</div>
+<div id="visitorCount">👥 Live Visitors: Loading...</div>
 
 <footer>
     Created by <a href="https://x.com/2mzya" class="footer-link" target="_blank">Mohamad Zahir</a> & Mohammed Osama
@@ -281,16 +285,40 @@
     let isAutoPlaying = false;
 
     // Initialize museum
-    function initMuseum() {
-        // Try to load data from external file
-        if (typeof museumData !== 'undefined' && museumData.length > 0) {
-            data = museumData;
-            showItem(0);
-        } else {
-            // Show error message if data file is not available
-            museumDiv.innerHTML = '<div class="error-message">Sorry, we could not load the museum data. Please try again later.</div>';
-            console.error("Museum data file not found");
+    async function initMuseum() {
+        try {
+            // Try to load data from external file
+            const response = await fetch('museum-data.js');
+            
+            if (!response.ok) {
+                throw new Error('Failed to load museum data');
+            }
+            
+            const scriptContent = await response.text();
+            
+            // Execute the script content to get museumData variable
+            const script = document.createElement('script');
+            script.textContent = scriptContent;
+            document.head.appendChild(script);
+            
+            // Wait a moment for the script to execute
+            setTimeout(() => {
+                if (typeof museumData !== 'undefined' && museumData.length > 0) {
+                    data = museumData;
+                    showItem(0);
+                } else {
+                    showErrorMessage();
+                }
+            }, 100);
+            
+        } catch (error) {
+            console.error("Error loading museum data:", error);
+            showErrorMessage();
         }
+    }
+
+    function showErrorMessage() {
+        museumDiv.innerHTML = '<div class="error-message">Sorry, we could not load the museum data. Please try again later.</div>';
     }
 
     // Display current item
@@ -317,6 +345,17 @@
             const img = document.createElement('img');
             img.src = item.src;
             img.alt = item.caption;
+            
+            // Add loading handling for images
+            img.onload = () => {
+                img.style.opacity = '1';
+            };
+            img.onerror = () => {
+                img.alt = 'Failed to load image';
+                img.style.borderColor = 'var(--secondary-color)';
+            };
+            img.style.opacity = '0';
+            img.style.transition = 'opacity 0.5s ease';
             
             // Add click event to open image in zoom mode
             img.addEventListener('click', () => openImageModal(item.src));
@@ -413,25 +452,108 @@
         });
     }
 
-    // Simulate live visitor system (without Firebase)
-    function setupVisitorCounter() {
-        let count = Math.floor(Math.random() * 50) + 10;
+    // Real Firebase setup for live visitors
+    function setupFirebase() {
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBstw5bNuq7u6ahJzN94fsRxcLIGNVGk0U",
+            authDomain: "livevisitors2025.firebaseapp.com",
+            databaseURL: "https://livevisitors2025-default-rtdb.firebaseio.com",
+            projectId: "livevisitors2025",
+            storageBucket: "livevisitors2025.firebasestorage.app",
+            messagingSenderId: "550260737631",
+            appId: "1:550260737631:web:d2cc207825df792c057dea",
+            measurementId: "G-K027GT40V1"
+        };
+
+        // Check if Firebase is already initialized
+        if (!firebase.apps.length) {
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+        }
+        
+        const database = firebase.database();
+        
+        // Create a reference to the visitors count
+        const visitorsRef = database.ref('visitors/count');
+        
+        // Listen for changes to the visitors count
+        visitorsRef.on('value', (snapshot) => {
+            const count = snapshot.val() || 0;
+            visitorCount.textContent = `👥 Live Visitors: ${count}`;
+        });
+        
+        // Increment visitor count when someone visits
+        visitorsRef.transaction((currentCount) => {
+            return (currentCount || 0) + 1;
+        });
+        
+        // Set up disconnect handler to decrement count when user leaves
+        const connectionRef = database.ref('.info/connected');
+        connectionRef.on('value', (snapshot) => {
+            if (snapshot.val() === true) {
+                // When we disconnect, remove this visitor
+                visitorsRef.onDisconnect().transaction((currentCount) => {
+                    return Math.max(0, (currentCount || 0) - 1);
+                });
+            }
+        });
+    }
+
+    // Alternative simple visitor counter if Firebase fails
+    function setupSimpleVisitorCounter() {
+        let count = Math.floor(Math.random() * 20) + 15; // More realistic starting point
         visitorCount.textContent = `👥 Live Visitors: ${count}`;
         
-        // Update count randomly every few seconds
+        // Simulate realistic visitor fluctuations
         setInterval(() => {
-            const change = Math.floor(Math.random() * 5) - 2; // -2 to +2
-            count = Math.max(5, count + change);
+            const change = Math.random() < 0.6 ? 1 : -1; // 60% chance to increase
+            count = Math.max(1, count + change);
             visitorCount.textContent = `👥 Live Visitors: ${count}`;
-        }, 5000);
+        }, 8000); // Update every 8 seconds
     }
 
     // Initialize everything when page loads
-    document.addEventListener('DOMContentLoaded', () => {
-        initMuseum();
+    document.addEventListener('DOMContentLoaded', async () => {
         setupEventListeners();
-        setupVisitorCounter();
+        
+        // Try to set up Firebase, fallback to simple counter if it fails
+        try {
+            // Load Firebase if not already loaded
+            if (typeof firebase === 'undefined') {
+                await loadFirebaseSDK();
+            }
+            setupFirebase();
+        } catch (error) {
+            console.error("Firebase setup failed, using simple counter:", error);
+            setupSimpleVisitorCounter();
+        }
+        
+        // Initialize museum
+        await initMuseum();
     });
+
+    // Load Firebase SDK dynamically
+    function loadFirebaseSDK() {
+        return new Promise((resolve, reject) => {
+            if (typeof firebase !== 'undefined') {
+                resolve();
+                return;
+            }
+            
+            const script = document.createElement('script');
+            script.src = 'https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js';
+            script.onload = () => {
+                const script2 = document.createElement('script');
+                script2.src = 'https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js';
+                script2.onload = resolve;
+                script2.onerror = reject;
+                document.head.appendChild(script2);
+            };
+            script.onerror = reject;
+            document.head.appendChild(script);
+        });
+    }
 </script>
 
 </body>
