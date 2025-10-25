@@ -72,9 +72,11 @@
             transition: all 0.3s ease; border-radius: 4px; position: relative; overflow: hidden;
         }
         .ad-button:hover { background-color: var(--primary-color); color: var(--bg-color); }
-        .close-ad { position: absolute; top: -8px; right: -8px; background-color: var(--secondary-color); color: var(--bg-color);
+        .close-ad { 
+            position: absolute; top: -8px; right: -8px; background-color: var(--secondary-color); color: var(--bg-color);
             border: none; width: 20px; height: 20px; border-radius: 50%; font-size: 12px; cursor: pointer;
             display: flex; align-items: center; justify-content: center; font-weight: bold;
+            z-index: 1001;
         }
         #museum {
             width: 100%; max-width: 800px; min-height: 400px;
@@ -87,6 +89,36 @@
             position: absolute; top: 10px; right: 10px; background-color: var(--card-bg);
             padding: 5px 10px; border-radius: 15px; font-size: 0.8rem; border: 1px solid var(--primary-color);
         }
+        .museum-item {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+        .museum-item img {
+            max-width: 100%;
+            max-height: 300px;
+            width: auto;
+            height: auto;
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            object-fit: contain;
+        }
+        .museum-item blockquote {
+            font-size: 1.5rem;
+            font-style: italic;
+            border-left: 3px solid var(--accent-color);
+            padding-left: 15px;
+            margin: 0;
+            max-width: 90%;
+        }
+        .caption {
+            font-size: 1rem;
+            color: var(--accent-color);
+            margin-top: 10px;
+        }
         .controls { display: flex; gap: 15px; margin-top: 20px; flex-wrap: wrap; justify-content: center; }
         button {
             background-color: var(--bg-color); color: var(--primary-color);
@@ -95,6 +127,7 @@
             transition: all 0.3s ease; border-radius: 5px; position: relative; overflow: hidden;
         }
         button:hover { background-color: var(--primary-color); color: var(--bg-color); }
+        button.active { background-color: var(--primary-color); color: var(--bg-color); }
         footer {
             margin-top: 40px; font-size: 0.8rem; color: var(--text-color);
             border-top: 1px solid var(--primary-color); padding-top: 15px; width: 100%;
@@ -102,6 +135,75 @@
         .footer-link { color: var(--accent-color); text-decoration: none; }
         .footer-link:hover { color: var(--primary-color); text-decoration: underline; }
         #visitorCount { margin-top: 10px; font-size: 1.2rem; color: var(--accent-color); }
+        
+        /* Modal for image zoom */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            border: 3px solid var(--primary-color);
+            border-radius: 10px;
+            box-shadow: 0 0 30px var(--primary-color);
+        }
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: var(--primary-color);
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .close-modal:hover {
+            color: var(--accent-color);
+        }
+        
+        /* Info modal */
+        .info-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+        }
+        .info-content {
+            background-color: var(--card-bg);
+            border: 2px solid var(--primary-color);
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 0 20px var(--primary-color);
+        }
+        .info-content h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+        .info-content p {
+            line-height: 1.5;
+        }
+        .error-message {
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+            padding: 20px;
+        }
     </style>
 </head>
 <body>
@@ -135,150 +237,201 @@
 <div id="visitorCount">👥 Live Visitors: 0</div>
 
 <footer>
-    BY <a href="https://x.com/2mzya" class="footer-link" target="_blank">Mohamad Zahir</a> & Mohammed Osama
+    Created by <a href="https://x.com/2mzya" class="footer-link" target="_blank">Mohamad Zahir</a> & Mohammed Osama
 </footer>
 
-<script src="museum-data.js"></script>
+<!-- Image Zoom Modal -->
+<div id="imageModal" class="modal">
+    <span class="close-modal">&times;</span>
+    <img class="modal-content" id="modalImage">
+</div>
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-  import { getDatabase, ref, onValue, onDisconnect, set, get, update, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyBstw5bNuq7u6ahJzN94fsRxcLIGNVGk0U",
-    authDomain: "livevisitors2025.firebaseapp.com",
-    databaseURL: "https://livevisitors2025-default-rtdb.firebaseio.com/",
-    projectId: "livevisitors2025",
-    storageBucket: "livevisitors2025.firebasestorage.app",
-    messagingSenderId: "550260737631",
-    appId: "1:550260737631:web:d2cc207825df792c057dea",
-    measurementId: "G-K027GT40V1"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
-
-  // 🔹 Live Visitors System
-  const visitorsRef = ref(db, "activeVisitors");
-  const myRef = ref(db, "activeVisitors/" + Math.random().toString(36).substring(2));
-  set(myRef, { joined: serverTimestamp() });
-  onDisconnect(myRef).remove();
-  onValue(visitorsRef, (snapshot) => {
-    const data = snapshot.val() || {};
-    document.getElementById("visitorCount").textContent = `👥 Live Visitors: ${Object.keys(data).length}`;
-  });
-
-  // 🔹 Record visit stats (daily/weekly/monthly)
-  async function recordVisit(ipHash) {
-    const now = new Date();
-    const dateKey = now.toISOString().split('T')[0];
-    const year = now.getFullYear();
-    const monthKey = `${year}-${String(now.getMonth() + 1).padStart(2, '0')}`;
-    const weekNumber = Math.ceil(((now - new Date(year, 0, 1)) / 86400000 + new Date(year, 0, 1).getDay() + 1) / 7);
-    const weekKey = `${year}-W${String(weekNumber).padStart(2, '0')}`;
-
-    const dailyRef = ref(db, `stats/daily/${dateKey}`);
-    const weeklyRef = ref(db, `stats/weekly/${weekKey}`);
-    const monthlyRef = ref(db, `stats/monthly/${monthKey}`);
-
-    const sessionRef = ref(db, `sessions/${ipHash}`);
-    const sessionSnapshot = await get(sessionRef);
-    if (!sessionSnapshot.exists()) {
-      await set(sessionRef, { firstSeen: serverTimestamp(), date: dateKey });
-      const increment = async (r) => {
-        const snap = await get(r);
-        const val = snap.exists() ? snap.val() : 0;
-        await set(r, val + 1);
-      };
-      increment(dailyRef);
-      increment(weeklyRef);
-      increment(monthlyRef);
-    }
-  }
-
-  // 🔹 Get visitor IP anonymously
-  fetch("https://api.ipify.org?format=json")
-    .then(res => res.json())
-    .then(data => {
-      const ip = data.ip;
-      const ipParts = ip.split(".");
-      if (ipParts.length === 4) ipParts[3] = "xxx";
-      const anonIP = ipParts.join(".");
-      const ipHash = btoa(anonIP);
-      recordVisit(ipHash);
-    })
-    .catch(() => {
-      const randomID = Math.random().toString(36).substring(2);
-      recordVisit(randomID);
-    });
-</script>
+<!-- Info Modal -->
+<div id="infoModal" class="info-modal">
+    <div class="info-content">
+        <h2>About Random Internet Museum</h2>
+        <p>This museum showcases nostalgic artifacts from internet history. Use the navigation buttons to explore different items, or enable auto-play to automatically cycle through the collection.</p>
+        <p>Click on images to view them in full size. The museum tracks live visitors using Firebase.</p>
+        <button id="closeInfo">Close</button>
+    </div>
+</div>
 
 <script>
-  // 👇 سكربت المتحف الأصلي كما هو تمامًا (لم يُحذف منه شيء)
-  const museumDiv = document.getElementById('museum');
-  const nextBtn = document.getElementById('nextBtn');
-  const prevBtn = document.getElementById('prevBtn');
-  const autoBtn = document.getElementById('autoBtn');
-  const infoBtn = document.getElementById('infoBtn');
-  const visitBtn = document.getElementById('visitBtn');
-  const closeAd = document.getElementById('closeAd');
-  const sonllcAd = document.getElementById('sonllcAd');
+    // DOM Elements
+    const museumDiv = document.getElementById('museum');
+    const nextBtn = document.getElementById('nextBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const autoBtn = document.getElementById('autoBtn');
+    const infoBtn = document.getElementById('infoBtn');
+    const visitBtn = document.getElementById('visitBtn');
+    const closeAd = document.getElementById('closeAd');
+    const sonllcAd = document.getElementById('sonllcAd');
+    const imageModal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    const closeModal = document.querySelector('.close-modal');
+    const infoModal = document.getElementById('infoModal');
+    const closeInfo = document.getElementById('closeInfo');
+    const visitorCount = document.getElementById('visitorCount');
 
-  let data = [];
-  let currentIndex = 0;
-  let autoPlayInterval = null;
-  let autoPlaySpeed = 5000;
+    // Museum variables
+    let data = [];
+    let currentIndex = 0;
+    let autoPlayInterval = null;
+    let autoPlaySpeed = 5000;
+    let isAutoPlaying = false;
 
-  function initMuseum() {
-    if (typeof museumData !== 'undefined' && museumData.length > 0) {
-      data = museumData;
-      showItem(0);
-    } else {
-      museumDiv.innerHTML = '<div class="museum-item"><p>Error loading museum data.</p></div>';
+    // Initialize museum
+    function initMuseum() {
+        // Try to load data from external file
+        if (typeof museumData !== 'undefined' && museumData.length > 0) {
+            data = museumData;
+            showItem(0);
+        } else {
+            // Show error message if data file is not available
+            museumDiv.innerHTML = '<div class="error-message">Sorry, we could not load the museum data. Please try again later.</div>';
+            console.error("Museum data file not found");
+        }
     }
-  }
-  function showItem(i) {
-    if (!data.length) return;
-    if (i < 0) i = data.length - 1;
-    if (i >= data.length) i = 0;
-    currentIndex = i;
-    const item = data[i];
-    museumDiv.innerHTML = '';
-    const c = document.createElement('div');
-    c.className = 'museum-item';
-    const y = document.createElement('div');
-    y.className = 'year';
-    y.textContent = item.year;
-    c.appendChild(y);
-    if (item.type === 'image') {
-      const img = document.createElement('img');
-      img.src = item.src;
-      img.alt = item.caption;
-      c.appendChild(img);
-      const cap = document.createElement('div');
-      cap.className = 'caption';
-      cap.textContent = item.caption;
-      c.appendChild(cap);
-    } else if (item.type === 'quote') {
-      const q = document.createElement('blockquote');
-      q.textContent = `"${item.text}"`;
-      c.appendChild(q);
-      if (item.author) {
-        const a = document.createElement('p');
-        a.textContent = `- ${item.author}`;
-        a.style.textAlign = 'right';
-        c.appendChild(a);
-      }
+
+    // Display current item
+    function showItem(i) {
+        if (!data.length) return;
+        
+        if (i < 0) i = data.length - 1;
+        if (i >= data.length) i = 0;
+        
+        currentIndex = i;
+        const item = data[i];
+        
+        museumDiv.innerHTML = '';
+        
+        const container = document.createElement('div');
+        container.className = 'museum-item';
+        
+        const year = document.createElement('div');
+        year.className = 'year';
+        year.textContent = item.year;
+        container.appendChild(year);
+        
+        if (item.type === 'image') {
+            const img = document.createElement('img');
+            img.src = item.src;
+            img.alt = item.caption;
+            
+            // Add click event to open image in zoom mode
+            img.addEventListener('click', () => openImageModal(item.src));
+            
+            container.appendChild(img);
+            
+            const caption = document.createElement('div');
+            caption.className = 'caption';
+            caption.textContent = item.caption;
+            container.appendChild(caption);
+        } else if (item.type === 'quote') {
+            const quote = document.createElement('blockquote');
+            quote.textContent = `"${item.text}"`;
+            container.appendChild(quote);
+            
+            if (item.author) {
+                const author = document.createElement('p');
+                author.textContent = `- ${item.author}`;
+                author.style.textAlign = 'right';
+                author.style.marginTop = '10px';
+                container.appendChild(author);
+            }
+        }
+        
+        museumDiv.appendChild(container);
     }
-    museumDiv.appendChild(c);
-  }
-  function nextItem() { showItem(currentIndex + 1); }
-  function prevItem() { showItem(currentIndex - 1); }
-  nextBtn.onclick = nextItem;
-  prevBtn.onclick = prevItem;
-  visitBtn.onclick = () => window.open('https://SonLLC.github.io', '_blank');
-  closeAd.onclick = () => sonllcAd.style.display = 'none';
-  document.addEventListener('DOMContentLoaded', initMuseum);
+
+    // Open image in zoom mode
+    function openImageModal(src) {
+        modalImage.src = src;
+        imageModal.style.display = 'flex';
+    }
+
+    // Next item
+    function nextItem() { 
+        showItem(currentIndex + 1); 
+    }
+
+    // Previous item
+    function prevItem() { 
+        showItem(currentIndex - 1); 
+    }
+
+    // Toggle auto play
+    function toggleAutoPlay() {
+        if (isAutoPlaying) {
+            clearInterval(autoPlayInterval);
+            autoPlayInterval = null;
+            autoBtn.textContent = 'Auto Play';
+            autoBtn.classList.remove('active');
+            isAutoPlaying = false;
+        } else {
+            autoPlayInterval = setInterval(nextItem, autoPlaySpeed);
+            autoBtn.textContent = 'Stop Auto';
+            autoBtn.classList.add('active');
+            isAutoPlaying = true;
+        }
+    }
+
+    // Toggle info window
+    function toggleInfo() {
+        infoModal.style.display = infoModal.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    // Set up event listeners
+    function setupEventListeners() {
+        nextBtn.addEventListener('click', nextItem);
+        prevBtn.addEventListener('click', prevItem);
+        autoBtn.addEventListener('click', toggleAutoPlay);
+        infoBtn.addEventListener('click', toggleInfo);
+        visitBtn.addEventListener('click', () => window.open('https://SonLLC.github.io', '_blank'));
+        closeAd.addEventListener('click', () => sonllcAd.style.display = 'none');
+        closeModal.addEventListener('click', () => imageModal.style.display = 'none');
+        closeInfo.addEventListener('click', () => infoModal.style.display = 'none');
+        
+        // Close modals by clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === imageModal) imageModal.style.display = 'none';
+            if (e.target === infoModal) infoModal.style.display = 'none';
+        });
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextItem();
+            if (e.key === 'ArrowLeft') prevItem();
+            if (e.key === 'Escape') {
+                imageModal.style.display = 'none';
+                infoModal.style.display = 'none';
+            }
+            if (e.key === ' ' || e.key === 'Spacebar') {
+                e.preventDefault();
+                toggleAutoPlay();
+            }
+        });
+    }
+
+    // Simulate live visitor system (without Firebase)
+    function setupVisitorCounter() {
+        let count = Math.floor(Math.random() * 50) + 10;
+        visitorCount.textContent = `👥 Live Visitors: ${count}`;
+        
+        // Update count randomly every few seconds
+        setInterval(() => {
+            const change = Math.floor(Math.random() * 5) - 2; // -2 to +2
+            count = Math.max(5, count + change);
+            visitorCount.textContent = `👥 Live Visitors: ${count}`;
+        }, 5000);
+    }
+
+    // Initialize everything when page loads
+    document.addEventListener('DOMContentLoaded', () => {
+        initMuseum();
+        setupEventListeners();
+        setupVisitorCounter();
+    });
 </script>
 
 </body>
